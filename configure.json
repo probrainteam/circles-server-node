@@ -1,0 +1,24 @@
+{
+    "main":{
+        "database":{
+            "framework":"mysql",
+            "uri":"http://localhost",
+            "domain": "localhost",
+            "port":"18000"
+        },
+        "uri":"http://localhost",
+        "domain":"localhost",
+        "port":"13000"
+    },
+    "develop":{
+        "database":{
+            "framework":"mysql",
+            "uri":"http://localhost",
+            "domain": "localhost",
+            "port":"18000"
+        },
+        "uri":"http://localhost",
+        "domain":"localhost",
+        "port":"13000"
+    }
+}
