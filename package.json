@@ -13,9 +13,12 @@
     "typescript": "^4.5.4"
   },
   "scripts": {
-    "start" : "node dist/app.js",
-    "build" : "tsc -p .",
+    "start": "node dist/app.js",
+    "build": "tsc -p .",
     "main": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts main",
-    "dev":  "echo \"starting in dev\" && ./db_init.sh && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev"
+    "dev": "echo \"starting in dev\" && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev"
+  },
+  "dependencies": {
+    "helmet": "^5.0.1"
   }
 }
