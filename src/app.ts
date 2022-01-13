@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express'
-import { getDomainUri, getDomainPort, getDBUri, getDBPort } from './static/common'
+import { getDomainUri, getDomainPort, getDBUri, getDBPort } from './conf/conf'
 
 const app = express();
 const helmet = require('helmet'); // node js http secure 모듈
