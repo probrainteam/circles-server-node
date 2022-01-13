@@ -1,5 +1,5 @@
 // Static variables
-import * as configure from "../../configure.json";
+import * as configure from "./configure.json";
 const DEV_DB_URI:String = configure.develop.database.uri;
 const DEV_DB_PORT: String = configure.develop.database.port;
 const DEV_URI: String = configure.develop.uri;
