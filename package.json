@@ -19,6 +19,10 @@
     "dev": "echo \"starting in dev\" && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev"
   },
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/gravatar": "^1.8.3",
+    "@types/jsonwebtoken": "^8.5.8",
+    "express-validator": "^6.14.0",
     "helmet": "^5.0.1"
   }
 }
