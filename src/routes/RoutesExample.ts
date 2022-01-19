@@ -3,6 +3,6 @@ import  ExampleController  from '../controller/ExampleController';
 
 const router = Router();
 
-router.use('/signup', ExampleController.exampleControll);
+router.use('/test', ExampleController.exampleControll);
 
 export default router;
