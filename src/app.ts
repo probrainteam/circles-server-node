@@ -1,5 +1,5 @@
 import { getDomainUri, getDomainPort, getDBUri, getDBPort } from './conf/conf'
-import loaders from './loaders '
+import loaders from './loaders'
 const express = require('express');
 
 async function startServer() {
