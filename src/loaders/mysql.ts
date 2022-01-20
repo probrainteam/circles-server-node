@@ -4,7 +4,7 @@ export default async (): Promise<any> => {
     const connection = await mysql.createConnection({
         host : 'localhost',
         user : 'root',
-        password : '',
+        password:'qwer1234',
         database : 'test'
     })
     
