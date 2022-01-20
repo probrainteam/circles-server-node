@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express'
 import { getDomainUri, getDomainPort, getDBUri, getDBPort } from './conf/conf'
+import routes from './routes';
 
 const app = express();
 const helmet = require('helmet'); // node js http secure 모듈
@@ -10,7 +11,7 @@ const domain: String = `${getDomainUri(MODE)}:${PORT}`; // uri:port
 const db: String = `${getDBUri(MODE)}:${getDBPort(MODE)}`; // uri:port
 
 app.use(helmet()); // helmet의 모든 기능 사용
-
+app.use(routes)
 console.warn(`
     ---------------------------------------------
         Start Server with Condition :: ${MODE}
