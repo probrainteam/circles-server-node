@@ -3,7 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 
 const basicQuery = async (query:string) : Promise<object> =>{
     const mysqlConnection = await mysqlLoader();
-    const  [rows, fields] = await mysqlConnection.query(`query`);
+    const  [rows, fields] = await mysqlConnection.query(query);
     console.log(rows[0])
     mysqlConnection.destroy();
     // @TODO :: throw err logic
@@ -26,4 +26,4 @@ const createExample = async (query:string) : Promise<boolean>=> {
     return true;
 }
 
-export default {example, createExample}
+export default {basicQuery, example, createExample}
