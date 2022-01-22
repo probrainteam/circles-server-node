@@ -6,10 +6,11 @@ const basicQuery = async (query:string) : Promise<object> =>{
     const  [rows, fields] = await mysqlConnection.query(`query`);
     console.log(rows[0])
     mysqlConnection.destroy();
-    return rows;   
+    // @TODO :: throw err logic
+    return rows;
 }
 
-const example = async () => {
+const example = async () => { // Would be delete ...
     const mysqlConnection = await mysqlLoader();
     const  [rows, fields] = await mysqlConnection.query("SHOW STATUS LIKE 'Threads_connected';");
     console.log(rows[0])
@@ -21,6 +22,7 @@ const createExample = async (query:string) : Promise<boolean>=> {
     const  [rows, fields] = await mysqlConnection.query(`CREATE ... ${query}`);
     console.log(rows[0])
     mysqlConnection.destroy();
+    // @TODO :: change logic using basicQuery
     return true;
 }
 
