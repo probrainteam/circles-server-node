@@ -1,14 +1,14 @@
-const mysql = require('mysql');
+const mysql = require('promise-mysql2');
 
 export default async (): Promise<any> => {
     const connection = await mysql.createConnection({
         host : 'localhost',
         user : 'root',
         password:'qwer1234',
-        database : 'test'
+        database:'test'
     })
+    console.log("---------------------!!! -")
+    //connection.connect(function(err:any) {if (err) throw err;});
     
-    //connect(process.env.DATABASE_URL, { useNewUrlParser: true });
-    //return connection.connection.db;
-    return connection.connect();
+    return connection;
   }

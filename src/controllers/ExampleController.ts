@@ -2,8 +2,9 @@ import express, { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import gravatar from "gravatar";
-
+import example from "../models/model1"
 import { check, validationResult } from "express-validator";
+import mysqlLoader from '../loaders/mysql'
 
 import { nextTick } from "process";
 const exampleControll = async (req: Request, res: Response, next: NextFunction) => {
@@ -48,6 +49,10 @@ const exampleControll = async (req: Request, res: Response, next: NextFunction) 
     } catch (err) {
         next(err);
     }*/
+    const mysqlConnection = await mysqlLoader();
+    const  [rows, fields] = await mysqlConnection.query("SHOW STATUS LIKE 'Threads_connected';");
+    console.log(rows[0])
+    mysqlConnection.destroy();
     res.send("example")
 };
 export default {exampleControll};
