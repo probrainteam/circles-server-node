@@ -40,3 +40,24 @@
 # <a id="2"></a>[2](#a1). 브랜치
 
 # <a id="3"></a>[3](#a1). 주의사항
+
+# <a id="3"></a>[4](#a1). Trouble shooting
+
+> ---
+>
+> # MYSQL
+>
+> ### erno: 1251
+>
+> code: 'ER_NOT_SUPPORTED_AUTH_MODE',
+> errno: 1251,
+> sqlMessage: 'Client does not support authentication protocol requested by server; consider upgrading MySQL client',
+> sqlState: '08004',
+> fatal: true
+>
+> 위와 같이 나오는 경우 mysql에 접속해서 아래와 같은 명령어를 입력
+> `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';` > `flush privileges;`
+>
+> https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
+>
+> ---
