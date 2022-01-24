@@ -1,7 +1,7 @@
 const figlet = require('figlet');
 import expressLoader from './express';
 import mysqlLoader from './mysql';
-import testLoader from './testLoader';
+///import testLoader from './testLoader';
 
 export default async ({ expressApp } : {expressApp: any}) => {
     console.log(figlet.textSync('Circles - server', {
@@ -10,7 +10,7 @@ export default async ({ expressApp } : {expressApp: any}) => {
         whitespaceBreak: true
     }));
     try{
-        const test = await testLoader();
+        //const test = await testLoader();
     } catch(err:any){
         console.error(err)
         console.log("no test file... ignore")
