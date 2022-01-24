@@ -1,4 +1,4 @@
-import { getDomainUri, getDomainPort, getDBUri, getDBPort } from './conf/conf'
+import { getDomainUri, getDomainPort, getDbUri, getDbPort } from './conf/conf'
 import loaders from './loaders'
 const express = require('express');
 
@@ -8,10 +8,10 @@ async function startServer() {
   
     await loaders({ expressApp: app });
     
-    const MODE: String = process.argv[2]; // main or dev
-    const PORT: String = getDomainPort(MODE) // 포트
-    const domain: String = `${getDomainUri(MODE)}:${PORT}`; // uri:port
-    const db: String = `${getDBUri(MODE)}:${getDBPort(MODE)}`; // uri:port
+    const MODE: string = process.argv[2]; // main or dev
+    const PORT: string = getDomainPort(MODE) // 포트
+    const domain: string = `${getDomainUri(MODE)}:${PORT}`; // uri:port
+    const db: string = `${getDbUri(MODE)}:${getDbPort(MODE)}`; // uri:port
 
     console.warn(`
     ---------------------------------------------

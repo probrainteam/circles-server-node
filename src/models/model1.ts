@@ -1,6 +1,6 @@
 import mysqlLoader from '../loaders/mysql'
 import express, { NextFunction, Request, Response } from "express";
-
+/*
 const basicQuery = async (query:string) : Promise<object> =>{
     const mysqlConnection = await mysqlLoader();
     const  [rows, fields] = await mysqlConnection.query(query);
@@ -26,4 +26,4 @@ const createExample = async (query:string) : Promise<boolean>=> {
     return true;
 }
 
-export default {basicQuery, example, createExample}
+export default {basicQuery, example, createExample}*/
