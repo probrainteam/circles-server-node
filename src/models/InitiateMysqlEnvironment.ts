@@ -50,8 +50,8 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
     // @override
     public async connect(): Promise<any> {
         this.connection = await this.mysql.createConnection({
-            host : this._host,
-            user : this._user,
+            host: this._host, 
+            user: this._user,
             password: this._password,
             multipleStatements:true
         })
