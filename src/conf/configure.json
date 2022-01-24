@@ -21,7 +21,7 @@
             "port":"18000",
             "user": "root",
             "password": "qwer1234",
-            "database": "test"
+            "database": "testasdfas"
         },
         "uri":"http://localhost",
         "host":"localhost",

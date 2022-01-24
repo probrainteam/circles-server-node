@@ -1,7 +1,7 @@
-const mysql = require('mysql2');
 import { getDbHost, getDbPassword, getDbUser } from "../conf/conf"
 
 abstract class AbstractMysqlConnector {
+    protected mysql = require('promise-mysql2');
     readonly _host: string;
     readonly _user: string;
     readonly _password: string;
@@ -13,7 +13,7 @@ abstract class AbstractMysqlConnector {
         this._password = getDbPassword(process.argv[2]);
     }
     public async connect(): Promise<any> {
-        this.connection = await mysql.createConnection({
+        this.connection = await this.mysql.createConnection({
             host : this._host,
             user : this._user,
             password: this._password,
