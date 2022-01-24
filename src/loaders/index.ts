@@ -15,9 +15,9 @@ export default async ({ expressApp } : {expressApp: any}) => {
             console.warn("> Success !")
         }
         console.log("MYSQL Intialized");
+    }).finally(async function (){
+        await mysqlConnection.destroy();
     });
-    
-   //mysqlConnection.destroy()
     console.warn("Express in Intialize sequence ...")
     await expressLoader({ app: expressApp });
     console.log('Express Intialized');
