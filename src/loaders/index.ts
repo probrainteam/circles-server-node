@@ -1,9 +1,15 @@
 const fs = require('fs');
 const path = require('path');
+const figlet = require('figlet');
 import expressLoader from './express';
 import mysqlLoader from './mysql';
 
 export default async ({ expressApp } : {expressApp: any}) => {
+    console.log(figlet.textSync('Circles - server', {
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+        whitespaceBreak: true
+    }));
     console.warn("MYSQL in Intialize sequence ...")
     const mysqlConnection = await mysqlLoader();
     await mysqlConnection.query("SHOW TABLES").then(async function([row, fields] : object[]){
