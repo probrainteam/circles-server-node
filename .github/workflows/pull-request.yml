@@ -42,8 +42,8 @@ jobs:
         run: yarn build
 
       # Build 파일을 기반으로 development env를 사용하여 실행합니다.
-      - name: Run pull-request, using build files with development env
-        run: yarn pull-request
+      # - name: Run pull-request, using build files with development env
+      #  run: yarn pull-request
 
       # 앞의 작업이 실패/성공과 관계 없이 컨테이너들을 종료합니다.
       - name: Stop containers
