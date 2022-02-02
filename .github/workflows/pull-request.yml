@@ -1,15 +1,12 @@
 name: "Pull request"
 on:
-  push:
-    branches:
-      - "**"
-      # - '*'         # matches every branch that doesn't contain a '/'
-      # - '*/*'       # matches every branch containing a single '/'
-      # - '**'        # matches every branch
-      # - '!master'   # excludes master
+  # - '*'         # matches every branch that doesn't contain a '/'
+  # - '*/*'       # matches every branch containing a single '/'
+  # - '**'        # matches every branch
+  # - '!master'   # excludes master
   pull_request:
     branches:
-      - "!main"
+      - "**"
 
 jobs:
   docker:
