@@ -14,7 +14,8 @@
   },
   "scripts": {
     "start": "node dist/app.js",
-    "build": "tsc -p .",
+    "build": "tsc",
+    "pull-request":"node dist/app.js",
     "main": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts main",
     "dev": "echo \"starting in dev\" && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev"
   },
