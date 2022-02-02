@@ -1,5 +1,7 @@
+
 type HTTP_STATUS_MESSAGE = {[key:number]:string}
 const DEFAULT_HTTP_STATUS_MESSAGES : HTTP_STATUS_MESSAGE = {
+
     400: 'Bad Requests', // client에서 request 요청 시 누락 또는 잘못된 데이터 전송 및 요청
     401: 'Unauthorized',
     403: 'Forbidden',
