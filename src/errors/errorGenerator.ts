@@ -1,6 +1,7 @@
-import { check } from "express-validator";
 
-const DEFAULT_HTTP_STATUS_MESSAGES : any = { // any 없이 처리하는 방법..?
+type HTTP_STATUS_MESSAGE = {[key:number]:string}
+const DEFAULT_HTTP_STATUS_MESSAGES : HTTP_STATUS_MESSAGE = {
+
     400: 'Bad Requests', // client에서 request 요청 시 누락 또는 잘못된 데이터 전송 및 요청
     401: 'Unauthorized',
     403: 'Forbidden',
@@ -10,7 +11,6 @@ const DEFAULT_HTTP_STATUS_MESSAGES : any = { // any 없이 처리하는 방법..
     500: 'Internal Server Error', // Server 로직 수행 중 터짐
     503: 'Temporary Unavailable',
 };
-type DEFAULT_HTTP_STATUS_CODE = {[key:number]:string}
 
 //interface 이용해 Error 객체에 statusCode key 추가
 export interface ErrorWithStatusCode extends Error {
