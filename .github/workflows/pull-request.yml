@@ -1,15 +1,12 @@
 name: "Pull request"
 on:
-  push:
-    branches:
-      - "*"
-  # - '*'         # matches every branch that doesn't contain a '/'
-  # - '*/*'       # matches every branch containing a single '/'
-  # - '**'        # matches every branch
-  # - '!master'   # excludes master
   pull_request:
     branches:
       - "**"
+      # - '*'         # matches every branch that doesn't contain a '/'
+      # - '*/*'       # matches every branch containing a single '/'
+      # - '**'        # matches every branch
+      # - '!master'   # excludes master
 
 jobs:
   docker:
@@ -25,24 +22,30 @@ jobs:
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
 
-      # Node 16 버전을 사용합니다.
-      - name: Install node
-        uses: actions/setup-node@v2
+      # Coverage를 작성해주는 pull request
+      - name: Tests ✅
+        uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          node-version: "16"
-          cache: "npm"
+          test-script: yarn test
+          package-manager: yarn
+      # # Node 16 버전을 사용합니다.
+      # - name: Install node
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: "16"
+      #     cache: "npm"
 
-      # yarn을 설치합니다.
-      - name: Install Yarn
-        run: npm install yarn
+      # # yarn을 설치합니다.
+      # - name: Install Yarn
+      #   run: npm install yarn
 
-      # 설치된 yarn을 통해 패키지를 설치합니다.
-      - name: Install dependencies
-        run: yarn install
+      # # 설치된 yarn을 통해 패키지를 설치합니다.
+      # - name: Install dependencies
+      #   run: yarn install
 
-      # 빌드를 수행합니다.
-      - name: Run build
-        run: yarn build
+      # # 빌드를 수행합니다.
+      # - name: Run build
+      #   run: yarn build
 
       # Build 파일을 기반으로 development env를 사용하여 실행합니다.
       # - name: Run pull-request, using build files with development env
