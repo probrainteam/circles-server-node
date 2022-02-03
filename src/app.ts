@@ -1,13 +1,9 @@
-
+const express = require('express');
 import { getDomainUri, getDomainPort, getDbUri, getDbPort } from './conf/conf'
 import loaders from './loaders'
-const express = require('express');
-
 
 async function startServer() {
-
     const app = express();
-  
     await loaders({ expressApp: app });
     
     const MODE: string = process.argv[2]; // main or dev
@@ -34,3 +30,5 @@ async function startServer() {
   }
   
   startServer();
+
+export {startServer}
