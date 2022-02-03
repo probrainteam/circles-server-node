@@ -1,20 +1,26 @@
 name: "Pull request"
 on:
-  push:
+  pull_request:
     branches:
       - "**"
       # - '*'         # matches every branch that doesn't contain a '/'
       # - '*/*'       # matches every branch containing a single '/'
       # - '**'        # matches every branch
       # - '!master'   # excludes master
-  pull_request:
-    branches:
-      - "!main"
 
 jobs:
-  docker:
+  test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_HOST: "%"
+          MYSQL_ROOT_PASSWORD: qwer1234
+        ports:
+          - "3306:3306"
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       # 해당 저장소의 코드를 가져옵니다.
@@ -22,33 +28,39 @@ jobs:
         uses: actions/checkout@v2
 
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
-      - name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build
+      - name: start mysql
+        run: docker run --name some-mysql -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=qwer1234 -d mysql:5.7 --default-authentication-plugin=mysql_native_password
 
-      # Node 16 버전을 사용합니다.
-      - name: Install node
-        uses: actions/setup-node@v2
+      # Coverage를 작성해주는 pull request
+      - name: Tests ✅
+        uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          node-version: "16"
-          cache: "npm"
+          test-script: yarn test
+          package-manager: yarn
+      # # Node 16 버전을 사용합니다.
+      # - name: Install node
+      #   uses: actions/setup-node@v2
+      #   with:
+      #     node-version: "16"
+      #     cache: "npm"
 
-      # yarn을 설치합니다.
-      - name: Install Yarn
-        run: npm install yarn
+      # # yarn을 설치합니다.
+      # - name: Install Yarn
+      #   run: npm install yarn
 
-      # 설치된 yarn을 통해 패키지를 설치합니다.
-      - name: Install dependencies
-        run: yarn install
+      # # 설치된 yarn을 통해 패키지를 설치합니다.
+      # - name: Install dependencies
+      #   run: yarn install
 
-      # 빌드를 수행합니다.
-      - name: Run build
-        run: yarn build
+      # # 빌드를 수행합니다.
+      # - name: Run build
+      #   run: yarn build
 
       # Build 파일을 기반으로 development env를 사용하여 실행합니다.
-      - name: Run pull-request, using build files with development env
-        run: yarn pull-request
+      # - name: Run pull-request, using build files with development env
+      #  run: yarn pull-request
 
-      # 앞의 작업이 실패/성공과 관계 없이 컨테이너들을 종료합니다.
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose.yml" down
+      # # 앞의 작업이 실패/성공과 관계 없이 컨테이너들을 종료합니다.
+      # - name: Stop containers
+      #   if: always()
+      #   run: docker-compose -f "docker-compose.yml" down
