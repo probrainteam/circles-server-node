@@ -24,6 +24,8 @@ jobs:
         ports:
           - "3306:3306"
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        command: --default-authentication-plugin=mysql_native_password
+
     steps:
       # 해당 저장소의 코드를 가져옵니다.
       - name: Checkout
