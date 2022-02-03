@@ -1,4 +1,3 @@
-
 type HTTP_STATUS_MESSAGE = {[key:number]:string}
 const DEFAULT_HTTP_STATUS_MESSAGES : HTTP_STATUS_MESSAGE = {
 

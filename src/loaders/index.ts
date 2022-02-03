@@ -1,7 +1,6 @@
 const figlet = require('figlet');
 import expressLoader from './express';
 import mysqlLoader from './mysql';
-///import testLoader from './testLoader';
 
 export default async ({ expressApp } : {expressApp: any}) => {
     console.log(figlet.textSync('Circles - server', {
@@ -9,12 +8,7 @@ export default async ({ expressApp } : {expressApp: any}) => {
         verticalLayout: 'default',
         whitespaceBreak: true
     }));
-    try{
-        //const test = await testLoader();
-    } catch(err:any){
-        console.error(err)
-        console.log("no test file... ignore")
-    }
+
     console.warn("MYSQL in Intialize sequence ...")
     await mysqlLoader();
  
