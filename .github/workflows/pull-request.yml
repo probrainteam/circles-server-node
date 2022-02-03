@@ -31,7 +31,7 @@ jobs:
 
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
       - name: start mysql
-        run: mysql -h 127.0.0.1 --port 3306 -u root -p qwer1234 -e GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;FLUSH PRIVILEGES;
+        run: mysql -h 127.0.0.1 --port 3306 -u root -p qwer1234 --host 127.0.0.1
 
       # Coverage를 작성해주는 pull request
       - name: Tests ✅
