@@ -19,7 +19,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
-          MYSQL_ROOT_HOST: "root"
+          MYSQL_ROOT_HOST: "%"
           MYSQL_ROOT_PASSWORD: qwer1234
         ports:
           - "3306:3306"
@@ -29,9 +29,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      # # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
+      # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
       # - name: start mysql
-      #   run: mysql -h 127.0.0.1 --port 3306 -u root
+      #   run: docker run --name some-mysql -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=qwer1234 -d mysql:latest
 
       # Coverage를 작성해주는 pull request
       - name: Tests ✅
