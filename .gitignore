@@ -1,4 +1,19 @@
-dist
-node_modules
-.DS_Store
-*test*
+# Ignore any generated TypeScript -> JavaScript files
+.github/actions/**/*.js
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Typescript v1 declaration files
+typings/
+
+# Optional eslint cache
+.eslintcache
