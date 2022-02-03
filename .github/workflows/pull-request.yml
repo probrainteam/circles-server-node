@@ -12,18 +12,26 @@ on:
       # - '!master'   # excludes master
 
 jobs:
-  docker:
+  test:
     timeout-minutes: 10
     runs-on: ubuntu-latest
-
+    services:
+    mysql:
+      image: mysql:8.0
+      env:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: test
+      ports:
+        - "3306:3306"
+      options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       # 해당 저장소의 코드를 가져옵니다.
       - name: Checkout
         uses: actions/checkout@v2
 
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
-      - name: Start containers
-        run: docker-compose -f "docker-compose.yml" up -d --build
+      - name: start mysql
+      - run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS test;'
 
       # Coverage를 작성해주는 pull request
       - name: Tests ✅
@@ -54,7 +62,7 @@ jobs:
       # - name: Run pull-request, using build files with development env
       #  run: yarn pull-request
 
-      # 앞의 작업이 실패/성공과 관계 없이 컨테이너들을 종료합니다.
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose.yml" down
+      # # 앞의 작업이 실패/성공과 관계 없이 컨테이너들을 종료합니다.
+      # - name: Stop containers
+      #   if: always()
+      #   run: docker-compose -f "docker-compose.yml" down
