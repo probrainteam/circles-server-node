@@ -23,7 +23,8 @@
     "main:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts main",
     "dev": "run-script-os",
     "dev:linux": "export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
-    "dev:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev"
+    "dev:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
+    "test": "tsc --noEmit && jest"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
