@@ -17,21 +17,22 @@ export type configureOptions = { [key: string]: string };
 export default {
   project_name: process.env.PROJECT_NAME || '',
   mode: process.env.NODE_ENV || '',
-  port: process.env.MAIN_DOMAIN_PORT || '',
+  port: process.env.DOMAIN_PORT || '',
   db: {
-    host: process.env.MAIN_DB_HOST || '',
-    uri: process.env.MAIN_DB_URI || '',
-    id: process.env.MAIN_DB_USER || '',
-    password: process.env.MAIN_DB_PASSWORD || '',
-    database: process.env.MAIN_DB_DATABASE || '',
+    host: process.env.DB_HOST || '',
+    uri: process.env.DB_URI || '',
+    id: process.env.DB_USER || '',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_DATABASE || '',
+    port: process.env.DB_PORT || ''
   },
   redis:{
-    host : process.env.MAIN_REDIS_HOST,
-    port : process.env.MAIN_REDIS_PORT,
-    name : process.env.MAIN_REDIS_NAME,
-    password : process.env.MAIN_REDIS_PASSWORD,
-    accessKey : process.env.MAIN_REDIS_ACCESSKEY,
-    refreshKey : process.env.MAIN_REDIS_REFRESHKEY
+    url : `redis://${process.env.REDIS_NAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}` || '',
+    port : process.env.REDIS_PORT || '',
+    name : process.env.REDIS_NAME || '',
+    password : process.env.REDIS_PASSWORD || '',
+    accessKey : process.env.REDIS_ACCESSKEY || '',
+    refreshKey : process.env.REDIS_REFRESHKEY || ''
   },
   logs: {
     dir: 'logs',

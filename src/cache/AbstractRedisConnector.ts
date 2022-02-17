@@ -1,4 +1,4 @@
-import { getRedisURL } from "../conf/conf"
+import config from "../conf"
 
 abstract class AbstractRedisConnector {
     readonly _redisURL: string;
@@ -7,7 +7,7 @@ abstract class AbstractRedisConnector {
 
     constructor(){
         // @TODO .env 기반으로 변경
-        this._redisURL = getRedisURL(process.argv[2]); 
+        this._redisURL = config.redis.url; 
     }
     public async connect(): Promise<any> {
         this.connection = await this.redis.createClient({
@@ -20,4 +20,4 @@ abstract class AbstractRedisConnector {
         return this.connection;
     }
 }
-export {AbstractRedisConnector};
+export { AbstractRedisConnector };

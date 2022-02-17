@@ -1,14 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 import { AbstractMysqlConnector } from "./AbstractMysqlConnector";
-import { getDbDatabase } from "../conf/conf"
+import config from '../conf'
 
 class InitiateMysqlEnviroment extends AbstractMysqlConnector{
     readonly _database : string;
 
     constructor(){
         super();
-        this._database = getDbDatabase(process.argv[2]);
+        this._database = config.db.database;
     }
     // @override
     public async initialize() : Promise<boolean> {
@@ -54,20 +54,20 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
             port: this._port,
             user: this._user,
             password: this._password,
-            multipleStatements:true
+            multipleStatements:true,
+            database: this._database
         })
         try{
-            await this.connection.query(`USE ${this._database}`)
+            await this.connection.query("use test;")
+            return this.getConnection();
         } catch(error:any){
             console.warn(`> There is no database ${this._database}`)
             console.warn("> Create database... ")
-            await this.connection.query(`CREATE DATABASE ${this._database};`)
-            await this.connection.query("SHOW DATABASES;")
+            
+            console.log(error)
             console.log("> Success !")
             await this.connection.query(`USE ${this._database}`)
-        } finally{
-            return this.getConnection();
-        }
+        } 
     }
 }
 
