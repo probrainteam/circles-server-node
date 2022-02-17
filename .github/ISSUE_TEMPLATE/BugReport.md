@@ -1,18 +1,28 @@
 ---
 name: 버그 리포트
 about: Create a report to help us improve
-title: "[BUG]"
+title: "🌋 title"
 labels: bug
 assignees: can019
 
 ---
 
-# 발생 일자
+# 🕐 발생 일자
 
-# 발생 환경
-- Platform :: 
-- optional description
+<b>_Date_</b>
+# 💻 발생 환경
 
-# 예상되는 요인 (optional)
+- 📟 Platform 
+- ➕Optional description
 
-# 캡쳐
+# 🤔 예상되는 요인 (optional)
+- None
+
+# 📸 캡쳐
+
+
+
+# 📄  Log
+- ✏️ Text
+
+
