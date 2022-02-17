@@ -41,6 +41,7 @@
     "figlet": "^1.5.2",
     "helmet": "^5.0.1",
     "promise-mysql2": "^1.0.0",
+    "redis": "^4.0.3",
     "run-script-os": "^1.1.6"
   }
 }

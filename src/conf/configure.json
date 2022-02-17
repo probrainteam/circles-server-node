@@ -9,6 +9,14 @@
             "password": "qwer1234",
             "database": "test"
         },
+        "redis":{
+            "host":"localhost",
+            "port":"18001",
+            "name":"default",
+            "pw":"qwer1234",
+            "accessKey":"MYACCKEY",
+            "refreshKey":"MYREFKEY"
+        },
         "uri":"http://localhost",
         "host":"localhost",
         "port":"13000"
@@ -22,6 +30,14 @@
             "user": "root",
             "password": "qwer1234",
             "database": "test"
+        },
+        "redis":{
+            "host":"localhost",
+            "port":"18001",
+            "name":"default",
+            "pw":"qwer1234",
+            "accessKey":"MYACCKEY",
+            "refreshKey":"MYREFKEY"
         },
         "uri":"http://localhost",
         "host":"localhost",
