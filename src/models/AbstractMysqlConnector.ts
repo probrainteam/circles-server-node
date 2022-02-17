@@ -1,4 +1,4 @@
-import { getDbHost, getDbPassword, getDbPort, getDbUser } from "../conf/conf"
+import config from '../conf'
 
 abstract class AbstractMysqlConnector {
     readonly _host: string;
@@ -7,26 +7,18 @@ abstract class AbstractMysqlConnector {
     readonly _port: string;
     protected connection: any;
     protected mysql = require('promise-mysql2');
-
-    constructor(){
-        // @TODO .env 기반으로 변경
-        this._port = getDbPort(process.argv[2]);
-        this._host = getDbHost(process.argv[2]); // ex) localhost
-        this._user = getDbUser(process.argv[2]); // ex) root
-        this._password = getDbPassword(process.argv[2]); // ex) qwer1234
+  
+    constructor() {
+      // @TODO .env 기반으로 변경
+      this._host = config.db.host;
+      this._user = config.db.id;
+      this._password = config.db.password;
+      this._port = config.db.port;
     }
-    public async connect(): Promise<any> {
-        this.connection = await this.mysql.createConnection({
-            host: this._host, 
-            port: this._port,
-            user: this._user,
-            password: this._password,
-            multipleStatements: false
-        })
-        return this.getConnection();
-    }
+    public abstract connect(): Promise<any>;
+  
     public getConnection(): any {
-        return this.connection;
+      return this.connection;
     }
-}
-export {AbstractMysqlConnector};
+  }
+  export { AbstractMysqlConnector };
