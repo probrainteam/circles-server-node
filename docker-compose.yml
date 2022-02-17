@@ -12,6 +12,8 @@ services:
     environment:
       - TZ=Asia/Seoul
       - MYSQL_PORT
+    volumes:
+      - /Users/Shared/data/Probrain_db:/var/lib/mysql
     # volumes:
     #   - ./db/conf.d:/etc/mysql/conf.d
     #   - ./db/data:/var/lib/mysql
@@ -27,6 +29,8 @@ services:
     environment:
       - TZ=Asia/Seoul
       - DEV_MYSQL_PORT
+    volumes:
+      - /Users/Shared/data/dev_db:/var/lib/mysql
     # volumes:
     #   - ./dev/conf.d:/etc/mysql/conf.d
     #   - ./dev/data:/var/lib/mysql
@@ -44,6 +48,8 @@ services:
         - "mode=standalone"
       ports:
         - "${DEV_REDIS_PORT}:6379"
+      volumes:
+      - /Users/Shared/data/Probrain_redis:/var/lib/mysql
 
 # version: "3.8" # 파일 규격 버전
 # services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의 ( 컴포즈에서 컨테이너 : 서비스 )
