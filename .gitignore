@@ -17,3 +17,9 @@ typings/
 
 # Optional eslint cache
 .eslintcache
+
+# Optional 
+.DS_Store
+
+# Env
+.env
