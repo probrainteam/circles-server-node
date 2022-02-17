@@ -1,6 +1,5 @@
 version: '3.8'
 services:
-
   db: 
     image: mysql:5.7 
     restart: always
@@ -8,7 +7,6 @@ services:
     container_name: Probrain_db
     ports:
       - "${MYSQL_PORT}:3306" 
-    build: ./
     environment:
       - TZ=Asia/Seoul
       - MYSQL_PORT
@@ -25,7 +23,6 @@ services:
     container_name: dev_db
     ports:
       - "${DEV_MYSQL_PORT}:3306" 
-    build: ./
     environment:
       - TZ=Asia/Seoul
       - DEV_MYSQL_PORT
