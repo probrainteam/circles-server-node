@@ -1,66 +1,54 @@
 name: "Pull request"
 on:
+  push:
+    branches:
+      - "**"
+  # - '*'         # matches every branch that doesn't contain a '/'
+  # - '*/*'       # matches every branch containing a single '/'
+  # - '**'        # matches every branch
+  # - '!master'   # excludes master
   pull_request:
     branches:
       - "**"
-      # - '*'         # matches every branch that doesn't contain a '/'
-      # - '*/*'       # matches every branch containing a single '/'
-      # - '**'        # matches every branch
-      # - '!master'   # excludes master
 
 jobs:
-  test:
-    timeout-minutes: 10
+  build:
+    timeout-minutes: 8
+    env:
+      MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      DEV_MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      DEV_REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-        env:
-          MYSQL_ROOT_HOST: "%"
-          MYSQL_ROOT_PASSWORD: qwer1234
-        ports:
-          - "3306:3306"
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       # 해당 저장소의 코드를 가져옵니다.
       - name: Checkout
         uses: actions/checkout@v2
 
-      # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
-      - name: start mysql
-        run: docker run --name some-mysql -e MYSQL_ROOT_HOST=% -e MYSQL_ROOT_PASSWORD=qwer1234 -d mysql:5.7 --default-authentication-plugin=mysql_native_password
+      # Docker compose up
+      - name: Docker
+        run: docker-compose -f 'docker-compose.yml' up -d --build
+
+      # Docker processor list 확인
+      - name: Check Docker list
+        run: docker-compose ps
+
+      # mysql ping test
+      - name: MYSQL Ping Test
+        run: bash -c './wait-for-it.sh -t 60 localhost:${DEV_MYSQL_PORT}'
+
+      # mongo pin test
+      #- name: MONGO Ping test
+      #  run: bash -c './wait-for-it.sh -t 60 localhost:3306'
 
       # Coverage를 작성해주는 pull request
-      - name: Tests ✅
+      - name: Docker build and Tests ✅
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          test-script: yarn test
+          test-script: yarn pr-test
           package-manager: yarn
-      # # Node 16 버전을 사용합니다.
-      # - name: Install node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: "16"
-      #     cache: "npm"
 
-      # # yarn을 설치합니다.
-      # - name: Install Yarn
-      #   run: npm install yarn
-
-      # # 설치된 yarn을 통해 패키지를 설치합니다.
-      # - name: Install dependencies
-      #   run: yarn install
-
-      # # 빌드를 수행합니다.
-      # - name: Run build
-      #   run: yarn build
-
-      # Build 파일을 기반으로 development env를 사용하여 실행합니다.
-      # - name: Run pull-request, using build files with development env
-      #  run: yarn pull-request
-
-      # # 앞의 작업이 실패/성공과 관계 없이 컨테이너들을 종료합니다.
-      # - name: Stop containers
-      #   if: always()
-      #   run: docker-compose -f "docker-compose.yml" down
+      # 성공/실패 여부에 상관없이 docker container 강제 종료
+      - name: Stop containers
+        if: always()
+        run: docker-compose -f "docker-compose.yml" down
