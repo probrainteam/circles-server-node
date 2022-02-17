@@ -35,7 +35,6 @@ services:
 
   redis:
       image: redis:alpine
-      command: redis-server --port 6379
       container_name: Probrain_redis
       hostname: redis_boot
       environment:
@@ -46,7 +45,7 @@ services:
       ports:
         - ${MAIN_REDIS_PORT}:6379
       command: >
-          --requirepass ${MAIN_REDIS_PASSWORD}
+          redis-server --port 6379 --requirepass ${MAIN_REDIS_PASSWORD}
 # version: "3.8" # 파일 규격 버전
 # services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의 ( 컴포즈에서 컨테이너 : 서비스 )
 #   dev-mysql-service-db: # 서비스 명
