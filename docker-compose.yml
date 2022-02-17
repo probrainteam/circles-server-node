@@ -7,7 +7,7 @@ services:
     command: --lower_case_table_names=1
     container_name: Probrain_db
     ports:
-      - "${MYSQL_PORT}:3306" 
+      - "${MAIN_DB_PORT}:3306" 
     env_file: .env
     build: ./
     environment:
@@ -22,7 +22,7 @@ services:
     command: --lower_case_table_names=1
     container_name: dev_db
     ports:
-      - "${MYSQL_PORT}:3306" 
+      - "${DEV_DB_PORT}:3306" 
     env_file: .env
     build: ./
     environment:
@@ -41,8 +41,9 @@ services:
         - "name=redis"
         - "mode=standalone"
       ports:
-        - ${REDIS_PORT}:6379
-
+        - ${MAIN_REDIS_PORT}:6379
+      command: >
+          --requirepass ${MAIN_REDIS_PASSWORD}
 # version: "3.8" # 파일 규격 버전
 # services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의 ( 컴포즈에서 컨테이너 : 서비스 )
 #   dev-mysql-service-db: # 서비스 명
