@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 
 const envFound = dotenv.config();
 
@@ -17,13 +17,21 @@ export type configureOptions = { [key: string]: string };
 export default {
   project_name: process.env.PROJECT_NAME || '',
   mode: process.env.NODE_ENV || '',
-  port: process.env.PORT || '',
+  port: process.env.MAIN_DOMAIN_PORT || '',
   db: {
-    host: process.env.DB_HOST || '',
-    uri: process.env.DB_URI || '',
-    id: process.env.DB_ID || '',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || '',
+    host: process.env.MAIN_DB_HOST || '',
+    uri: process.env.MAIN_DB_URI || '',
+    id: process.env.MAIN_DB_USER || '',
+    password: process.env.MAIN_DB_PASSWORD || '',
+    database: process.env.MAIN_DB_DATABASE || '',
+  },
+  redis:{
+    host : process.env.MAIN_REDIS_HOST,
+    port : process.env.MAIN_REDIS_PORT,
+    name : process.env.MAIN_REDIS_NAME,
+    password : process.env.MAIN_REDIS_PASSWORD,
+    accessKey : process.env.MAIN_REDIS_ACCESSKEY,
+    refreshKey : process.env.MAIN_REDIS_REFRESHKEY
   },
   logs: {
     dir: 'logs',
