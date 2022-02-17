@@ -14,6 +14,10 @@ on:
 jobs:
   build:
     timeout-minutes: 8
+    env:
+      MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      DEV_MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      DEV_REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
     runs-on: ubuntu-latest
 
     steps:
