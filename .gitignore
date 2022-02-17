@@ -20,3 +20,6 @@ typings/
 
 # Optional 
 .DS_Store
+
+# Env
+.env
