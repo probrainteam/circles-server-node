@@ -7,7 +7,7 @@ abstract class AbstractRedisConnector {
 
     constructor(){
         // @TODO .env 기반으로 변경
-        this._redisURL = config.redis.host; 
+        this._redisURL = config.redis.url; 
     }
     public async connect(): Promise<any> {
         this.connection = await this.redis.createClient({

@@ -27,7 +27,7 @@ export default {
     port: process.env.DB_PORT || ''
   },
   redis:{
-    host : process.env.REDIS_HOST || '',
+    url : `redis://${process.env.REDIS_NAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}` || '',
     port : process.env.REDIS_PORT || '',
     name : process.env.REDIS_NAME || '',
     password : process.env.REDIS_PASSWORD || '',
