@@ -6,7 +6,7 @@ services:
     command: --lower_case_table_names=1
     container_name: Probrain_db
     ports:
-      - "${MYSQL_PORT}:3306" 
+      - "${MYSQL_PORT}:3307" 
     environment:
       - TZ=Asia/Seoul
       - MYSQL_PORT
