@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 8
     env:
       MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-      DEV_MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+      DEV_MYSQL_PORT: ${{ secrets.DEV_MYSQL_PORT }}
       DEV_REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
     runs-on: ubuntu-latest
 
@@ -25,9 +25,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Generate Environment Variables File for Development
+        run: |
+          if [ -f ".env.local" ]; then
+            cp .env.local .env
+            echo "Using development .env"
+          fi
+
       # Docker compose up
       - name: Docker
-        run: docker-compose -f 'docker-compose.yml' up -d --build
+        run: docker-compose -f 'docker-compose.yml' up -d dev_db redis --build
 
       # Docker processor list 확인
       - name: Check Docker list
@@ -38,14 +45,18 @@ jobs:
         run: bash -c './wait-for-it.sh -t 60 localhost:${DEV_MYSQL_PORT}'
 
       # mongo pin test
-      #- name: MONGO Ping test
+      # - name: MONGO Ping test
+      #  run: bash -c './wait-for-it.sh -t 60 localhost:3306'
+
+      # redis pin test
+      # - name: MONGO Ping test
       #  run: bash -c './wait-for-it.sh -t 60 localhost:3306'
 
       # Coverage를 작성해주는 pull request
       - name: Docker build and Tests ✅
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
-          test-script: yarn pr-test
+          test-script: yarn test
           package-manager: yarn
 
       # 성공/실패 여부에 상관없이 docker container 강제 종료
