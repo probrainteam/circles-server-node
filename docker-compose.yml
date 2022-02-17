@@ -44,8 +44,7 @@ services:
       image: redis:alpine
       container_name: Probrain_redis
       hostname: redis_boot
-      env_file:
-        ./.env
+      env_file: .env
       labels:
         - "name=redis"
         - "mode=standalone"
