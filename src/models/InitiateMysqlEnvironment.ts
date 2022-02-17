@@ -52,7 +52,6 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
         this.connection = await this.mysql.createConnection({
             host: this._host, 
             port: this._port,
-
             user: this._user,
             password: this._password,
             multipleStatements:true
