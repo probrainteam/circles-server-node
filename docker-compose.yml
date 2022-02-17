@@ -12,10 +12,10 @@ services:
     environment:
       - TZ=Asia/Seoul
       - MYSQL_PORT
-    volumes:
-      - ./db/conf.d:/etc/mysql/conf.d
-      - ./db/data:/var/lib/mysql
-      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    # volumes:
+    #   - ./db/conf.d:/etc/mysql/conf.d
+    #   - ./db/data:/var/lib/mysql
+    #   - ./db/initdb.d:/docker-entrypoint-initdb.d
   dev_db: 
     image: mysql:5.7 
     restart: always
@@ -27,10 +27,10 @@ services:
     environment:
       - TZ=Asia/Seoul
       - DEV_MYSQL_PORT
-    volumes:
-      - ./dev/conf.d:/etc/mysql/conf.d
-      - ./dev/data:/var/lib/mysql
-      - ./dev/initdb.d:/docker-entrypoint-initdb.d      
+    # volumes:
+    #   - ./dev/conf.d:/etc/mysql/conf.d
+    #   - ./dev/data:/var/lib/mysql
+    #   - ./dev/initdb.d:/docker-entrypoint-initdb.d      
 
   redis:
       image: redis:alpine
