@@ -12,6 +12,7 @@ class MysqlConnector extends AbstractMysqlConnector{
     public async connect(): Promise<object> {
         this.connection = await this.mysql.createConnection({
             host: this._host, 
+            port: this._port,
             user: this._user,
             password: this._password,
             database: this._database,
