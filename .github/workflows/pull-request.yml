@@ -35,7 +35,7 @@ jobs:
 
       # mysql ping test
       - name: MYSQL Ping Test
-        run: bash -c './wait-for-it.sh -t 60 localhost:{{ secrets.DEV_MYSQL_PORT }}'
+        run: bash -c './wait-for-it.sh -t 60 localhost:${DEV_MYSQL_PORT}'
 
       # mongo pin test
       #- name: MONGO Ping test
