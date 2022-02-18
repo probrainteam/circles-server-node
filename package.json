@@ -38,7 +38,8 @@
     "main:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts main",
     "dev": "run-script-os",
     "dev:darwin:linux": "./init-dev.sh && export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
-    "dev:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev"
+    "dev:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "@types/bcryptjs": "^2.4.2",
