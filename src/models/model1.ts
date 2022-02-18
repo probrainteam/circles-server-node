@@ -1,5 +1,5 @@
-import mysqlLoader from '../loaders/mysql'
-import express, { NextFunction, Request, Response } from "express";
+import mysqlLoader from '../loaders/mysql';
+import express, { NextFunction, Request, Response } from 'express';
 /*
 const basicQuery = async (query:string) : Promise<object> =>{
     const mysqlConnection = await mysqlLoader();

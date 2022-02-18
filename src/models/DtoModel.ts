@@ -1,10 +1,9 @@
-import { AbstractDtoModel } from "./AbstractDtoModel";
+import { AbstractDtoModel } from './AbstractDtoModel';
 
 class DtoModel extends AbstractDtoModel {
-    constructor(){
-        super();
-        this.getConnector().destroy();
-    }
-
+  constructor() {
+    super();
+    this.getConnector().destroy();
+  }
 }
-export { DtoModel }
+export { DtoModel };
