@@ -1,4 +1,7 @@
 {
+    "env":{
+        "node": true
+    },
     "root": true,
     "parser": "@typescript-eslint/parser",
     "plugins": [
@@ -9,6 +12,7 @@
         "plugin:prettier/recommended", "prettier"
     ],
     "rules": { 
-        "no-console": 0
+        "no-console": "warn",
+        "no-unused-vars":"off"
     }
 }
