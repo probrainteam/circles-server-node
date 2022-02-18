@@ -38,7 +38,7 @@ services:
     # volumes:
     #   - ./dev/conf.d:/etc/mysql/conf.d
     #   - ./dev/data:/var/lib/mysql
-    #   - ./dev/initdb.d:/docker-entrypoint-initdb.d      
+    #   - ./dev/initdb.d:/docker-entrypoint-initdb.d
 
   redis:
       image: redis:alpine
