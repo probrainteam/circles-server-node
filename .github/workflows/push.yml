@@ -8,7 +8,7 @@ on:
       # - '**'        # matches every branch
       # - '!master'   # excludes master
 jobs:
-  docker:
+  Lint:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
@@ -16,6 +16,9 @@ jobs:
       # 해당 저장소의 코드를 가져옵니다.
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Install yarn packages
+        run: yarn install
 
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
       - name: ESLINT TEST
