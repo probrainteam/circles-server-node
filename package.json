@@ -22,7 +22,9 @@
   "scripts": {
     "start": "node dist/app.js",
     "build": "tsc",
-    "test": "tsc --noEmit && jest",
+    "test": "run-script-os",
+    "test:darwin:linux":"export NODE_ENV=development && tsc --noEmit && jest",
+    "test:win32": "echo 'Nothing available ... abort' exit -1",
     "pull-request": "run-script-os",
     "pull-request:darwin:linux": "export NODE_ENV=development && node dist/src/app.js",
     "pull-request:win32": "SET NODE_ENV=development && node dist/src/app.js",

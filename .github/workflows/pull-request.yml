@@ -31,18 +31,23 @@ jobs:
             cp .env.local .env
             echo "Using development .env"
           fi
+      # yarn 디펜던시 설치
+      - name: Install dependencies
+        run: yarn install
 
-      # Docker compose up
-      - name: Docker
-        run: docker-compose -f 'docker-compose.yml' up -d dev_db redis --build
+      -name: set up Docker
+        run: ./init-dev.sh
+      # # Docker compose up
+      # - name: Docker
+      #   run: docker-compose -f 'docker-compose.yml' up -d dev_db redis --build
 
-      # Docker processor list 확인
-      - name: Check Docker list
-        run: docker-compose ps
+      # # Docker processor list 확인
+      # - name: Check Docker list
+      #   run: docker-compose ps
 
-      # mysql ping test
-      - name: MYSQL Ping Test
-        run: bash -c './wait-for-it.sh -t 60 localhost:${DEV_MYSQL_PORT}'
+      # # mysql ping test
+      # - name: MYSQL Ping Test
+      #   run: bash -c './wait-for-it.sh -t 60 localhost:${DEV_MYSQL_PORT}'
 
       # mongo pin test
       # - name: MONGO Ping test
