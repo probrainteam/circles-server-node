@@ -1,7 +1,7 @@
-import { InitiateRedisEnviroment } from "../cache/InitiateRedisEnvironment";
+import { InitiateRedisEnviroment } from '../cache/InitiateRedisEnvironment';
 
 export default async (): Promise<boolean> => {
-    const initiateor = new InitiateRedisEnviroment();
-    
-    return await initiateor.initialize();
-}
+  const initiateor = new InitiateRedisEnviroment();
+
+  return await initiateor.initialize();
+};
