@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      -name: set up Docker
+      - name: Initialize docker and wait until ready
         run: ./init-dev.sh
       # # Docker compose up
       # - name: Docker
