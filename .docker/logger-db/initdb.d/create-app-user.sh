@@ -4,7 +4,6 @@
 # https://github.com/docker-library/mongo/blob/master/docker-entrypoint.sh#L303
 
 set -e # Mongo 환경변수 load
-
 mongosh <<EOF
 use admin
 db.auth('admin', '$LOGGER_DB_INITDB_ROOT_PASSWORD')
