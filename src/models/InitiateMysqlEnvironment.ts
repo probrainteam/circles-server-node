@@ -10,10 +10,9 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
         super();
         this._database = config.db.database;
     }
-    // @override
-    public async initialize() : Promise<boolean> {
+    public async initialize() : Promise<any> {
+        console.log("make new mysql instance");
         const connection = await this.connect();
-        let result = false;
 
         try{  // Table 생성 Query 날림
             const [rows, fields] = await connection.query("SHOW TABLES;")
@@ -29,7 +28,6 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
                 console.warn("> Success !")
             }
             console.log("MYSQL Intialized ✅");
-            result = true;
         } catch(error: any){ // Error -> Table 생성 쿼리 중 오류 발생
             console.log("MYSQL Failed to Intialized ❌");
             if(process.argv[2] === "dev") // 개발환경인 경우 error terminal에 출력
@@ -42,8 +40,8 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
             // destroy 되지 않으면 connection이 살아있어 db thread leak이 발생
             // mysql에서 SHOW STATUS LIKE 'Threads_connected';쿼리를 통해 현재 thread connection을
             // 볼 수 있음
-            connection.destroy();
-            return result;
+            //connection.destroy();
+            return connection;
         }
         
     }
@@ -69,6 +67,13 @@ class InitiateMysqlEnviroment extends AbstractMysqlConnector{
             await this.connection.query(`USE ${this._database}`)
         } 
     }
+
+    public override async getConnection(): Promise<any> {
+        if(this.connection)
+            return this.connection;
+        else
+            return await this.initialize();
+    }
 }
 
-export {InitiateMysqlEnviroment}
+module.exports = new InitiateMysqlEnviroment();

@@ -17,4 +17,5 @@ export default async ({ expressApp } : {expressApp: any}) => {
     console.warn("Express in Intialize sequence ...")
     await expressLoader({ app: expressApp });
     console.log('Express Intialized ✅');
+    return "hi"
 }

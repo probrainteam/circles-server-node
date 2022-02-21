@@ -4,8 +4,8 @@ import loaders from './loaders'
 
 async function startServer() {
     const app = express();
-    await loaders({ expressApp: app });
- 
+    const loader = await loaders({ expressApp: app });
+    console.log(loader)
     const PORT: string = conf.port // 포트
 
     console.warn(`

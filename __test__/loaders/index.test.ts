@@ -1,11 +1,9 @@
 const express = require('express');
 const app = express();
-import { exit } from "process";
+const mysql = require("../../src/models/InitiateMysqlEnvironment");
+
 import request from "supertest"
 import loaders from "../../src/loaders"
-import expressLoader from "../../src/loaders/express"
-import mysqlLoader from "../../src/loaders/redis"
-import redisLoader from "../../src/loaders/express"
 
 describe("Routing test", ()=>{
     test("Get example/test", async ()=>{
@@ -20,9 +18,10 @@ describe("Routing test", ()=>{
         expect(response.statusCode).toBe(404)
     })
 })
-afterAll(done => {
+afterAll(async () => {
     // THIS IS HOW YOU CLOSE CONNECTION IN MONGOOSE (mongodb ORM)
-    done();
+    const client = await mysql.getConnection();
+    client.destroy();
 });
     
     
