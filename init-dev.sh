@@ -2,7 +2,19 @@
 MAX_TRY=8
 CURRENT_TRY=0
 
-echo "$TEST"
+# Check parm
+if [ $# -eq 1 ]; then
+    if [ $1 == reset ]; then
+        echo "\033[33mUsing reset parm\033[0m"
+        docker rm -f dev_db
+        docker rm -f logger-db
+        docker rm -f Probrain_redis
+    else
+        echo "\033[31m Wrong parm..\033[0m"
+        exit -1;
+    fi
+fi
+
 # Wrapper
 function check_status {
     echo "\033[34m"

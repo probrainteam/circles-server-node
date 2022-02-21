@@ -67,6 +67,7 @@ services:
         - ${LOGGER_DB_PORT}:27017
       volumes:
         - ./.docker/logger-db/mongod.conf:/etc/mongod.conf
-        - ./.docker/logger-db/initdb.d/create-app-user.sh:/docker-entrypoint-initdb.d/create-app-user.sh
+        # initdb.d/ => container 생성 시 실행, :ro => readOnly
+        - ./.docker/logger-db/initdb.d/create-app-user.sh:/docker-entrypoint-initdb.d/create-app-user.sh:ro
         #- ./.docker/mongodb/data/db/:/data/db/
         - ./.docker/logger-db/data/log/:/var/log/mongodb/
