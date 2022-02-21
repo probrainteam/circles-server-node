@@ -1,6 +1,5 @@
-//import { InitiateMysqlEnviroment } from "../models/InitiateMysqlEnvironment";
-const mysql = require("../models/InitiateMysqlEnvironment");
+const mysql = require('../models/InitiateMysqlEnvironment');
 export default async (): Promise<any> => {
-   const client = await mysql.getConnection();
-    //client.destroy();
-}
+  const client = await mysql.getConnection();
+  //client.destroy();
+};

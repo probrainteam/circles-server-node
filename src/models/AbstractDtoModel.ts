@@ -1,15 +1,14 @@
-import { MysqlConnector}  from "./MySqlConnector"
+import { MysqlConnector } from './MySqlConnector';
 
 abstract class AbstractDtoModel {
-    readonly connector;
+  readonly connector;
 
-    constructor(){
-        this.connector = new MysqlConnector().connect();
-    }
-    getConnector(): any {
-        return this.connector;
-    }
-
+  constructor() {
+    this.connector = new MysqlConnector().connect();
+  }
+  getConnector(): any {
+    return this.connector;
+  }
 }
 
-export { AbstractDtoModel }
+export { AbstractDtoModel };

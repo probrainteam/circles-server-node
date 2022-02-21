@@ -8,7 +8,7 @@ on:
       # - '**'        # matches every branch
       # - '!master'   # excludes master
 jobs:
-  docker:
+  Lint:
     timeout-minutes: 10
     runs-on: ubuntu-latest
 
@@ -17,6 +17,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install yarn packages
+        run: yarn install
+
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
-      - name: hello push
-        run: echo "hello push"
+      - name: ESLINT TEST
+        run: yarn lint
