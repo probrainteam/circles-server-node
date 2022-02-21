@@ -27,13 +27,14 @@ else
 fi
 
 # docker 실행
-bash -c "docker-compose -f 'docker-compose.yml' up -d --build dev_db redis"
+bash -c "docker-compose -f 'docker-compose.yml' up -d --build dev_db redis logger-db"
 docker-compose ps
 
 
 # Docker ping test
 check_status "localhost:${DB_PORT}"
 check_status "localhost:${REDIS_PORT}"
+check_status "localhost:${LOGGER_DB_PORT}"
 
 # Mysql ping test
 # @TODO :: mysql: [Warning] Using a password on the command line interface can be insecure. 출력 안되게 변경
