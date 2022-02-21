@@ -21,7 +21,7 @@ jobs:
         run: yarn install
       
       - name: initialize docker and wait until ready
-        run: ./init.sh
+        run: ./init-dev.sh
 
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
       - name: ESLINT TEST
