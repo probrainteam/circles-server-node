@@ -24,6 +24,7 @@ class InitiateRedisEnviroment extends AbstractRedisConnector {
         // @TODO :: logger file에 해당 내용 저장
       }
     } finally {
+      connection.quit();
       return result;
     }
   }

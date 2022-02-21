@@ -19,7 +19,7 @@ jobs:
 
       - name: Install yarn packages
         run: yarn install
-
+      
       # docker-compose를 활용해 테스트를 위한 컨테이너 환경을 구성합니다.
       - name: ESLINT TEST
         run: yarn lint
