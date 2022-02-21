@@ -23,3 +23,6 @@ typings/
 
 # Env
 .env
+
+# Docker
+.docker/data
