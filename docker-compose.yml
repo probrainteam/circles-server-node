@@ -51,24 +51,22 @@ services:
       ports:
         - ${REDIS_PORT}:6379
 
-
-
-
-# version: "3.8" # 파일 규격 버전
-# services: # 이 항목 밑에 실행하려는 컨테이너 들을 정의 ( 컴포즈에서 컨테이너 : 서비스 )
-#   dev-mysql-service-db: # 서비스 명
-#     image: mysql:5.7 # 사용할 이미지
-#     restart: always
-#     container_name: banchelin-mysql-dev # 컨테이너 이름 설정
-#     ports:
-#       - "3306:3306" # 접근 포트 설정 (컨테이너 외부:컨테이너 내부)  <- 컨테이너 내부는 무조건 3306
-#     environment: # -e 옵션
-#       - MYSQL_DATABASE=bang
-#       - MYSQL_ROOT_PASSWORD=qwer1234  # MYSQL 패스워드 설정 옵션
-#       - TZ=Asia/Seoul
-#     command: # 명령어 실행
-#       - --character-set-server=utf8mb4
-#       - --collation-server=utf8mb4_unicode_ci
-#       - --lower_case_table_names=1
-#     volumes:
-#       - /Users/Shared/data/banchelin-mysql-dev:/var/lib/mysql # -v 옵션 (다렉토리 마운트 설정)
+  logger-db:
+      image: mongo
+      restart: always
+      container_name: logger-db
+      env_file: .env
+      environment:
+        - TZ=Asia/Seoul
+        - MONGO_INITDB_ROOT_USERNAME=${LOGGER_DB_INITDB_ROOT_USERNAME}
+        - MONGO_INITDB_ROOT_PASSWORD=${LOGGER_DB_INITDB_ROOT_PASSWORD}
+        - MONGO_INITDB_DATABASE=${LOGGER_DB_INITDB_DATABASE}
+      
+      command: ["-f", "/etc/mongod.conf"]
+      ports:
+        - ${LOGGER_DB_PORT}:27017
+      volumes:
+        - ./.docker/logger-db/mongod.conf:/etc/mongod.conf
+        - ./.docker/logger-db/initdb.d/create-app-user.sh:/docker-entrypoint-initdb.d/create-app-user.sh
+        #- ./.docker/mongodb/data/db/:/data/db/
+        - ./.docker/logger-db/data/log/:/var/log/mongodb/
