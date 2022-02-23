@@ -62,12 +62,11 @@ services:
         - MONGO_INITDB_ROOT_PASSWORD=${LOGGER_DB_INITDB_ROOT_PASSWORD}
         - MONGO_INITDB_DATABASE=${LOGGER_DB_INITDB_DATABASE}
       
-      command: ["-f", "/etc/mongod.conf"]
       ports:
         - ${LOGGER_DB_PORT}:27017
       volumes:
-        - ./.docker/logger-db/mongod.conf:/etc/mongod.conf
+        #- ./.docker/logger-db/mongod.conf:/etc/mongod.conf
         # initdb.d/ => container 생성 시 실행, :ro => readOnly
         - ./.docker/logger-db/initdb.d/create-app-user.sh:/docker-entrypoint-initdb.d/create-app-user.sh
         #- ./.docker/mongodb/data/db/:/data/db/
-        - ./.docker/logger-db/data/log/:/var/log/mongodb/
+        #- ./.docker/logger-db/data/log/:/var/log/mongodb/
