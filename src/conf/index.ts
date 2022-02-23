@@ -35,7 +35,14 @@ export default {
     accessKey: process.env.REDIS_ACCESSKEY || '',
     refreshKey: process.env.REDIS_REFRESHKEY || '',
   },
-  logs: {
-    dir: 'logs',
+  logger: {
+    db: {
+      host: process.env.LOGGER_DB_HOST || '',
+      port: process.env.LOGGER_DB_PORT || '',
+      user: process.env.LOGGER_DB_INITDB_USER_NAME || '',
+      password: process.env.LOGGER_DB_INITDB_USER_PASSWORD || '',
+      database: process.env.LOGGER_DB_INITDB_DATABASE || '',
+      auth_source: process.env.LOGGER_DB_INITDB_ROOT_USERNAME || '',
+    },
   },
 };
