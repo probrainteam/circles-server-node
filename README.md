@@ -2,62 +2,50 @@
 
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=flat-square&logo=Yarn&logoColor=white"/> <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=NGINX&logoColor=white"/> <img src="https://img.shields.io/badge/aws-232F3E?style=flat-square&logo=Amazonaws&logoColor=white"/>
 
-| <a id="a1"></a>목차         |
+| <a id="a1"></a>목차          |
 | --------------------------- |
-| [1. 프로젝트 init](#1)<br/> |
-| [2. 브랜치 ](#2)<br/>       |
+| [1. 프로젝트 개요](#1)<br/>    |
+| [2. Development setting ](#2)<br/>       |
+| [3.  주의사항 ](#3)<br/>       |
+
 
 <br/>
 
-# <a id="1"></a>[1](#a1). 프로젝트 init
+# <a id="1"></a>[1](#a1). 프로젝트 개요
 
-> ---
->
-> # Yarn
->
-> - yarn이 없다면 yarn 설치 후 진행해주세요
-> - mac :: brew install yarn
->
-> # local 세팅
->
->       git clone ${주소} && yarn install
->
-> # 서버 구동 (with nodemon)
->
-> ## yarn main
->
-> - 배포 서버를 위한 구동
-> - AWS db, domain setting으로 서버가 구동됩니다 (진행중)
->
-> ## yarn dev
->
-> - 로컬 서버를 위한 구동
-> - localhost db, domain setting으로 서버가 구동됩니다.
-> - 이 과정에서 mysql 오류가 날 수 있습니다.
->
-> ---
+# <a id="2"></a>[2](#a1). Development setting
+## 필요사항
+- yarn
+- docker
+- node
+- vscode
+  - eslint 확장
+  - prettier 확장
 
-# <a id="2"></a>[2](#a1). 브랜치
+## 세팅 방법
+- Mac/linux
 
+  👉 아래 순서로 명령어를 입력합니다.
+  1. `./init-dev.sh `
+     - Dev db를 docker를 통하여 생성해줍니다.
+  2. `yarn install`
+     - node dependency를 설치합니다.
+  3. `yarn test`
+     - 제대로 세팅이 되었는지 확인하기 위해 jest 기반 test를 진행합니다.
+  4. `yarn dev`
+     - dev 세팅으로 node를 구동합니다.
+     - 이 때 os에 따라 node_env가 자동으로 주입됩니다.
+- Windows
+
+  👉 프로젝트 폴더에서 powershell 또는 cmd를 열고 (VScode terminal도 됩니다) 아래 순서로 명령어를 입력합니다.
+  1. `yarn install`
+     - node dependency를 설치합니다.
+  2. `yarn test`
+     - 제대로 세팅이 되었는지 확인하기 위해 jest 기반 test를 진행합니다.
+  3. `yarn dev`
+     - dev 세팅으로 node를 구동합니다.
+     - 이 때 os에 따라 node_env가 자동으로 주입됩니다.
+ 
 # <a id="3"></a>[3](#a1). 주의사항
 
-# <a id="3"></a>[4](#a1). Trouble shooting
 
-> ---
->
-> # MYSQL
->
-> ### erno: 1251
->
-> code: 'ER_NOT_SUPPORTED_AUTH_MODE',
-> errno: 1251,
-> sqlMessage: 'Client does not support authentication protocol requested by server; consider upgrading MySQL client',
-> sqlState: '08004',
-> fatal: true
->
-> 위와 같이 나오는 경우 mysql에 접속해서 아래와 같은 명령어를 입력
-> `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';` > `flush privileges;`
->
-> https://stackoverflow.com/questions/50093144/mysql-8-0-client-does-not-support-authentication-protocol-requested-by-server
->
-> ---
