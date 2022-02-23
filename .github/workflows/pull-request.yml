@@ -1,67 +1,37 @@
-name: "Pull request"
+name: "Dev test with Docker and Jest"
 on:
-  # - '*'         # matches every branch that doesn't contain a '/'
-  # - '*/*'       # matches every branch containing a single '/'
-  # - '**'        # matches every branch
-  # - '!master'   # excludes master
   pull_request:
     branches:
       - "**"
+      # - '*'         # matches every branch that doesn't contain a '/'
+      # - '*/*'       # matches every branch containing a single '/'
+      # - '**'        # matches every branch
+      # - '!master'   # excludes master
 
 jobs:
-  build:
+  build_docker_and_run_test:
     timeout-minutes: 8
-    env:
-      MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-      DEV_MYSQL_PORT: ${{ secrets.DEV_MYSQL_PORT }}
-      DEV_REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
     runs-on: ubuntu-latest
-
+    # env:
+    #   MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+    #   DEV_MYSQL_PORT: ${{ secrets.DEV_MYSQL_PORT }}
+    #   DEV_REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
+    
     steps:
       # 해당 저장소의 코드를 가져옵니다.
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Generate Environment Variables File for Development
-        run: |
-          if [ -f ".env.local" ]; then
-            cp .env.local .env
-            echo "Using development .env"
-          fi
       # yarn 디펜던시 설치
       - name: Install dependencies
         run: yarn install
 
       - name: Initialize docker and wait until ready
         run: ./init-dev.sh
-      # # Docker compose up
-      # - name: Docker
-      #   run: docker-compose -f 'docker-compose.yml' up -d dev_db redis --build
-
-      # # Docker processor list 확인
-      # - name: Check Docker list
-      #   run: docker-compose ps
-
-      # # mysql ping test
-      # - name: MYSQL Ping Test
-      #   run: bash -c './wait-for-it.sh -t 60 localhost:${DEV_MYSQL_PORT}'
-
-      # mongo pin test
-      # - name: MONGO Ping test
-      #  run: bash -c './wait-for-it.sh -t 60 localhost:3306'
-
-      # redis pin test
-      # - name: MONGO Ping test
-      #  run: bash -c './wait-for-it.sh -t 60 localhost:3306'
-
+     
       # Coverage를 작성해주는 pull request
       - name: Docker build and Tests ✅
         uses: ArtiomTr/jest-coverage-report-action@v2
         with:
           test-script: yarn test
           package-manager: yarn
-
-      # 성공/실패 여부에 상관없이 docker container 강제 종료
-      - name: Stop containers
-        if: always()
-        run: docker-compose -f "docker-compose.yml" down

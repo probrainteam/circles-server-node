@@ -51,6 +51,7 @@
     "express-validator": "^6.14.0",
     "figlet": "^1.5.2",
     "helmet": "^5.0.1",
+    "mongoose": "^6.2.3",
     "promise-mysql2": "^1.0.0",
     "redis": "^4.0.3",
     "run-script-os": "^1.1.6"
