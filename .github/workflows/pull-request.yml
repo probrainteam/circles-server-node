@@ -22,12 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Generate Environment Variables File for Development
-        run: |
-          if [ -f ".env.local" ]; then
-            cp .env.local .env
-            echo "Using development .env"
-          fi
       # yarn 디펜던시 설치
       - name: Install dependencies
         run: yarn install
