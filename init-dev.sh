@@ -62,3 +62,20 @@ until echo '\q' | docker exec dev_db mysql -h "${DB_HOST}" -P"${DB_PORT}" -u"${D
     CURRENT_TRY=$((CURRENT_TRY+1))
 done
 echo "\033[32mMYSQL is ready\033[0m";
+
+CURRENT_TRY=0
+
+# mongo ping test
+until echo '\q' | docker exec banchelin-mongo-logger-dev mongo --host ${LOGGER_DB_HOST} ${LOGGER_DB_INITDB_DATABASE} -u${LOGGER_DB_INITDB_USER_NAME} -p${LOGGER_DB_INITDB_USER_PASSWORD} --authenticationDatabase ${LOGGER_DB_INITDB_ROOT_USERNAME}> /dev/null 2>&1; do
+    if [ $CURRENT_TRY -eq $MAX_TRY ]; then
+        echo "\033[31mMONGO is unavailable - Abort\033[0m";
+        docker ps
+        exit -1;
+    else
+        >&2 echo "\033[33mMONGO is unavailable - sleeping 5sec\033[0m";
+    sleep 5
+    fi
+    
+    CURRENT_TRY=$((CURRENT_TRY+1))
+done
+echo "\033[32mMONGO is ready\033[0m";
