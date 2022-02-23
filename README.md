@@ -27,7 +27,7 @@
 
   👉 아래 순서로 명령어를 입력합니다.
   1. `./init-dev.sh `
-     - Dev db를 docker를 통하여 생성해줍니다.
+     - docker를 통하여 dev db를 생성해줍니다.
   2. `yarn install`
      - node dependency를 설치합니다.
   3. `yarn test`
@@ -38,11 +38,15 @@
 - Windows
 
   👉 프로젝트 폴더에서 powershell 또는 cmd를 열고 (VScode terminal도 됩니다) 아래 순서로 명령어를 입력합니다.
-  1. `yarn install`
+  
+  1. .env 파일을 만든 후 .env.local의 내용을 복사하여 붙여넣습니다.
+  2. `docker-compose -f 'docker-compose.yml' up -d --build dev_db redis logger-db`
+     - docker를 통하여 dev db를 생성해줍니다.
+  3. `yarn install`
      - node dependency를 설치합니다.
-  2. `yarn test`
+  4. `yarn test`
      - 제대로 세팅이 되었는지 확인하기 위해 jest 기반 test를 진행합니다.
-  3. `yarn dev`
+  5. `yarn dev`
      - dev 세팅으로 node를 구동합니다.
      - 이 때 os에 따라 node_env가 자동으로 주입됩니다.
  
