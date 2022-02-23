@@ -30,7 +30,7 @@
     "start": "node dist/app.js",
     "build": "tsc",
     "test": "run-script-os",
-    "test:darwin:linux":"export NODE_ENV=development && tsc --noEmit && jest",
+    "test:darwin:linux": "export NODE_ENV=development && tsc --noEmit && jest",
     "test:win32": "echo 'Nothing available ... abort' exit -1",
     "pull-request": "run-script-os",
     "pull-request:darwin:linux": "export NODE_ENV=development && node dist/src/app.js",
@@ -54,6 +54,9 @@
     "mongoose": "^6.2.3",
     "promise-mysql2": "^1.0.0",
     "redis": "^4.0.3",
-    "run-script-os": "^1.1.6"
+    "run-script-os": "^1.1.6",
+    "winston": "^3.6.0",
+    "winston-daily-rotate-file": "^4.6.1",
+    "winston-mongodb": "^5.0.7"
   }
 }
