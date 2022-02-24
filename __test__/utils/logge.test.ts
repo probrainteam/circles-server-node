@@ -110,8 +110,6 @@ describe("Winston warn level", ()=>{
     })
 })
 
-
-
 afterAll(()=>{
     destroyMongo();
     mongoose.connection.close();
