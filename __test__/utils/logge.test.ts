@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const appRoot = require('app-root-path');
-const fs = require('fs');
 import { logger, destroyMongo } from "../../src/utils/logger"
 import config from "../../src/conf"
 
