@@ -2,22 +2,23 @@ const figlet = require('figlet');
 import expressLoader from './express';
 import mysqlLoader from './mysql';
 import redisLoader from './redis';
+import { logger } from '../utils/logger';
 
 export default async ({ expressApp }: { expressApp: any }) => {
-  console.log(
-    figlet.textSync('Circles - server', {
-      horizontalLayout: 'default',
-      verticalLayout: 'default',
-      whitespaceBreak: true,
-    }),
+  logger.info(
+    '\n' +
+      figlet.textSync('Circles - server', {
+        horizontalLayout: 'default',
+        verticalLayout: 'default',
+        whitespaceBreak: true,
+      }),
   );
 
-  console.warn('MYSQL in Intialize sequence ...');
+  logger.verbose('MYSQL in Intialize sequence ...');
   await mysqlLoader();
-  console.warn('REDIS in Intialize sequence ...');
+  logger.verbose('REDIS in Intialize sequence ...');
   await redisLoader();
-  console.warn('Express in Intialize sequence ...');
+  logger.verbose('Express in Intialize sequence ...');
   await expressLoader({ app: expressApp });
-  console.log('Express Intialized ✅');
-  return 'hi';
+  logger.info('Express Intialized ✅');
 };

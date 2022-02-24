@@ -1,6 +1,5 @@
-const fs = require('fs');
-const path = require('path');
 import { AbstractRedisConnector } from './AbstractRedisConnector';
+import { logger } from '../utils/logger';
 
 class InitiateRedisEnviroment extends AbstractRedisConnector {
   constructor() {
@@ -13,13 +12,13 @@ class InitiateRedisEnviroment extends AbstractRedisConnector {
 
     try {
       connection.on('error', () => {});
-      console.log('REDIS Intialized ✅');
+      logger.info('REDIS Intialized ✅');
       result = true;
     } catch (error: any) {
-      console.log('REDIS Failed to Intialized ❌');
+      logger.error('REDIS Failed to Intialized ❌');
       if (process.argv[2] === 'dev')
         // 개발환경인 경우 error terminal에 출력
-        console.error(error);
+        logger.error(error);
       else {
         // @TODO :: logger file에 해당 내용 저장
       }
