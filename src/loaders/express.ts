@@ -1,6 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import generalErrorHandler from '../errors/generalErrorHandler';
 import routes from '../routes';
+import MorganMiddleware from '../middleware/MorganMiddleware';
 
 export default async ({ app }: { app: express.Application }) => {
   app.get('/status', (req, res) => {
@@ -15,6 +16,7 @@ export default async ({ app }: { app: express.Application }) => {
 
   app.use(routes);
   app.use(generalErrorHandler);
+  app.use(MorganMiddleware);
 
   // import type { ErrorRequestHandler } from "express";
   // export type ErrorRequestHandler = (err: any, req: Request, res: Response, next:NextFunction
