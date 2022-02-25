@@ -8,12 +8,18 @@ function sleep(ms:number) {
     return new Promise((r) => setTimeout(r, ms));
 }
 beforeAll(async ()=>{
+    await sleep(1000)
+})
+beforeEach(async ()=>{
     await mongoose.connect(db_uri, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
-      console.log(`mongo uri :: ${db_uri}`)
-      console.log(config.logger.db.collection)
+      console.log(`using port ${config.logger.db.port}`)
+})
+afterAll(async()=>{
+    mongoose.connection.close();
+    destroyMongo();
 })
 describe("Winston info level", ()=>{
     let random_number:string = Math.random().toString();
