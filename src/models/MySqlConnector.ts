@@ -1,5 +1,6 @@
 import { AbstractMysqlConnector } from './AbstractMysqlConnector';
 import config from '../conf';
+import { logger } from '../utils/logger';
 
 class MysqlConnector extends AbstractMysqlConnector {
   readonly _database: string;
@@ -10,7 +11,7 @@ class MysqlConnector extends AbstractMysqlConnector {
   }
   // @override
   public async connect(): Promise<object> {
-    console.log(this._host, this._user, this._password, this._database, this._port);
+    logger.verbose(this._host, this._user, this._password, this._database, this._port);
     this.connection = await this.mysql.createConnection({
       host: this._host,
       user: this._user,

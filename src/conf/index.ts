@@ -43,6 +43,10 @@ export default {
       password: process.env.LOGGER_DB_INITDB_USER_PASSWORD || '',
       database: process.env.LOGGER_DB_INITDB_DATABASE || '',
       auth_source: process.env.LOGGER_DB_INITDB_ROOT_USERNAME || '',
+      collection: process.env.LOGGER_DB_COLLECTION || '',
+    },
+    file: {
+      root_dir: 'logs',
     },
   },
 };
