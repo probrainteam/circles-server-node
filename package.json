@@ -32,15 +32,10 @@
     "test": "run-script-os",
     "test:darwin:linux": "export NODE_ENV=development && tsc --noEmit && jest --detectOpenHandles --runInBand",
     "test:win32": "echo 'Nothing available ... abort' exit -1",
-    "pull-request": "run-script-os",
-    "pull-request:darwin:linux": "export NODE_ENV=development && node dist/src/app.js",
-    "pull-request:win32": "SET NODE_ENV=development && node dist/src/app.js",
-    "main": "run-script-os",
-    "main:darwin:linux": "export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts main",
-    "main:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts main",
     "dev": "run-script-os",
-    "dev:darwin:linux": "./init-dev.sh && export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
+    "dev:darwin:linux": "export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
     "dev:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
+    "docker": "docker-compose -f 'docker-compose.yml' up -d --build node-dev",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {

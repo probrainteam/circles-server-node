@@ -1,12 +1,38 @@
 version: '3.8'
 services:
+  node-dev:
+    build:
+      context: ./
+      target: dev # 도커파일 내 base dev를 build
+    volumes:
+      - .:/src
+    command: yarn dev
+    ports:
+      - "${DOMAIN_PORT}:3000"
+    environment:
+      DEBUG: nodejs-docker-express:*
+    env_file: .env
+    depends_on:
+      - dev_db
+      - redis
+      - logger-db
+  node:
+    build:
+      context: ./
+      target: dev # 도커파일 내 base dev를 build
+    volumes:
+      - .:/src
+    command: yarn start
+    ports:
+      - "3000:3000"
+    environment:
+      DEBUG: nodejs-docker-express:*
+    env_file: .env
   db: 
     image: mysql:5.7 
     restart: always
     command: --lower_case_table_names=1
     container_name: Probrain_db
-    ports:
-      - "${DB_PORT}:3306" 
     environment:
       - TZ=Asia/Seoul
       - MYSQL_PORT
@@ -20,8 +46,6 @@ services:
     image: mysql:5.7 
     restart: always
     container_name: dev_db
-    ports:
-      - "${DB_PORT}:3306" 
     environment:
       - TZ=Asia/Seoul
       - MYSQL_DATABASE=${DB_DATABASE}
@@ -33,13 +57,6 @@ services:
       - --collation-server=utf8mb4_unicode_ci
       - --lower_case_table_names=1
     env_file: .env
-    # volumes:
-    #   - /Users/Shared/data/dev_db:/var/lib/mysql
-    # volumes:
-    #   - ./dev/conf.d:/etc/mysql/conf.d
-    #   - ./dev/data:/var/lib/mysql
-    #   - ./dev/initdb.d:/docker-entrypoint-initdb.d
-
   redis:
       image: redis:alpine
       container_name: Probrain_redis
@@ -48,8 +65,6 @@ services:
       labels:
         - "name=redis"
         - "mode=standalone"
-      ports:
-        - ${REDIS_PORT}:6379
 
   logger-db:
       image: mongo
@@ -61,9 +76,6 @@ services:
         - MONGO_INITDB_ROOT_USERNAME=${LOGGER_DB_INITDB_ROOT_USERNAME}
         - MONGO_INITDB_ROOT_PASSWORD=${LOGGER_DB_INITDB_ROOT_PASSWORD}
         - MONGO_INITDB_DATABASE=${LOGGER_DB_INITDB_DATABASE}
-      
-      ports:
-        - ${LOGGER_DB_PORT}:27017
       volumes:
         #- ./.docker/logger-db/mongod.conf:/etc/mongod.conf
         # initdb.d/ => container 생성 시 실행, :ro => readOnly
