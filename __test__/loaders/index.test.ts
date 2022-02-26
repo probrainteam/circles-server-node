@@ -1,12 +1,25 @@
 const express = require('express');
 const app = express();
 const mysql = require("../../src/models/InitiateMysqlEnvironment");
-
 import request from "supertest"
 import loaders from "../../src/loaders"
 import {destroyMongo} from "../../src/utils/logger"
+
+let client:any;
+jest.setTimeout(10000)
+
+function sleep(ms:number) {
+    return new Promise((r) => setTimeout(r, ms));
+}
+
 beforeAll(async()=>{
+    await sleep(1000)
     await loaders({ expressApp: app });
+})
+beforeEach(async ()=>{
+    await sleep(2)
+    const connection = await mysql;
+    client = await connection.connection;
 })
 describe("Routing test", ()=>{
     test("Get example/test", async ()=>{

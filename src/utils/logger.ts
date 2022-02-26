@@ -8,6 +8,10 @@ import config from '../conf';
 const db_uri = `mongodb://${config.logger.db.user}:${config.logger.db.password}@${config.logger.db.host}:${config.logger.db.port}/${config.logger.db.database}?authSource=${config.logger.db.auth_source}`;
 const logDir = config.logger.file.root_dir;
 
+const logFormat = printf((info) => {
+  return `${info.timestamp} ${info.level}: ${info.message}`;
+});
+
 const infoTransport: DailyRotateFile = new DailyRotateFile({
   level: 'info',
   datePattern: 'YYYY-MM-DD',
@@ -26,9 +30,6 @@ const errorTransport: DailyRotateFile = new DailyRotateFile({
   zippedArchive: true,
 });
 
-const logFormat = printf((info) => {
-  return `${info.timestamp} ${info.level}: ${info.message}`;
-});
 const mongoLogTransport = new MongoDB({
   level: 'verbose',
   db: db_uri,
@@ -51,6 +52,7 @@ const logger = winston.createLogger({
   ),
   transports: [infoTransport, errorTransport, mongoLogTransport],
 });
+
 // Production 환경이 아닌 경우(dev 등)
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
@@ -62,6 +64,7 @@ if (process.env.NODE_ENV !== 'production') {
     }),
   );
 }
+
 const destroyMongo = () => {
   mongoLogTransport.destroy();
 };
