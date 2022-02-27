@@ -1,6 +1,7 @@
 version: '3.8'
 services:
   node-dev:
+    container_name: node-dev
     build:
       context: ./
       target: dev # 도커파일 내 base dev를 build
@@ -17,6 +18,7 @@ services:
       - redis
       - logger-db
   node:
+    container_name: node
     build:
       context: ./
       target: dev # 도커파일 내 base dev를 build
