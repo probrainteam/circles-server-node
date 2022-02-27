@@ -18,12 +18,12 @@ export default {
   mode: process.env.NODE_ENV || '',
   port: process.env.DOMAIN_PORT || '',
   db: {
-    host: process.env.DB_HOST || '',
-    uri: process.env.DB_URI || '',
-    id: process.env.DB_USER || '',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || '',
-    port: process.env.DB_PORT || '',
+    host: process.env.MYSQL_HOST || '',
+    uri: process.env.MYSQL_URI || '',
+    id: process.env.MYSQL_USER || '',
+    password: process.env.MYSQL_PASSWORD || '',
+    database: process.env.MYSQL_DATABASE || '',
+    port: process.env.MYSQL_PORT || '',
   },
   redis: {
     url:

@@ -8,7 +8,7 @@ services:
       - .:/src
     command: yarn dev
     ports:
-      - "${DOMAIN_PORT}:3000"
+      - "${DOMAIN_PORT}:13000"
     environment:
       DEBUG: nodejs-docker-express:*
     env_file: .env
@@ -33,9 +33,6 @@ services:
     restart: always
     command: --lower_case_table_names=1
     container_name: Probrain_db
-    environment:
-      - TZ=Asia/Seoul
-      - MYSQL_PORT
     volumes:
       - /Users/Shared/data/Probrain_db:/var/lib/mysql
     # volumes:
@@ -46,12 +43,6 @@ services:
     image: mysql:5.7 
     restart: always
     container_name: dev_db
-    environment:
-      - TZ=Asia/Seoul
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD} # MYSQL 패스워드 설정 옵션
-      - MYSQL_PASSWORD=${DB_PASSWORD}
     command: # 명령어 실행
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
