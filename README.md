@@ -6,7 +6,7 @@
 | --------------------------- |
 | [1. 프로젝트 개요](#1)<br/>    |
 | [2. Development setting ](#2)<br/>       |
-| [3.  Trouble shooting ](#3)<br/>       |
+| [3. Trouble shooting ](#3)<br/>       |
 
 
 <br/>
@@ -42,8 +42,8 @@ docker system prune
 docker volume prune
 ```
 ``` shell
-docker volume logs
+docker volume ls
 ```
 ``` shell
-docker system ls
+docker system df
 ``` 
