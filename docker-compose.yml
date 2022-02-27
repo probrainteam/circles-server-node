@@ -62,14 +62,5 @@ services:
       restart: always
       container_name: logger-db
       env_file: .env
-      environment:
-        - TZ=Asia/Seoul
-        - MONGO_INITDB_ROOT_USERNAME=${LOGGER_DB_INITDB_ROOT_USERNAME}
-        - MONGO_INITDB_ROOT_PASSWORD=${LOGGER_DB_INITDB_ROOT_PASSWORD}
-        - MONGO_INITDB_DATABASE=${LOGGER_DB_INITDB_DATABASE}
       volumes:
-        #- ./.docker/logger-db/mongod.conf:/etc/mongod.conf
-        # initdb.d/ => container 생성 시 실행, :ro => readOnly
         - ./.docker/logger-db/initdb.d/create-app-user.sh:/docker-entrypoint-initdb.d/create-app-user.sh
-        #- ./.docker/mongodb/data/db/:/data/db/
-        #- ./.docker/logger-db/data/log/:/var/log/mongodb/

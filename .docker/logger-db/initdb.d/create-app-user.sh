@@ -6,13 +6,13 @@
 set -e # Mongo 환경변수 load
 mongosh <<EOF
 use admin
-db.auth('admin', '$LOGGER_DB_INITDB_ROOT_PASSWORD')
+db.auth('$MONGO_INITDB_ROOT_USERNAME', '$MONGO_INITDB_ROOT_PASSWORD')
 db.createUser({
-  user:  '$LOGGER_DB_INITDB_USER_NAME',
-  pwd: '$LOGGER_DB_INITDB_USER_PASSWORD',
+  user:  '$MONGO_USER_NAME',
+  pwd: '$MONGO_USER_PASSWORD',
   roles: [{
     role: 'readWrite',
-    db: '$LOGGER_DB_INITDB_DATABASE'
+    db: '$MONGO_INITDB_DATABASE'
   }]
 })
 EOF
