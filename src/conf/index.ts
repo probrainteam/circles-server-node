@@ -18,12 +18,12 @@ export default {
   mode: process.env.NODE_ENV || '',
   port: process.env.DOMAIN_PORT || '',
   db: {
-    host: process.env.DB_HOST || '',
-    uri: process.env.DB_URI || '',
-    id: process.env.DB_USER || '',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_DATABASE || '',
-    port: process.env.DB_PORT || '',
+    host: process.env.MYSQL_HOST || '',
+    uri: process.env.MYSQL_URI || '',
+    id: process.env.MYSQL_USER || '',
+    password: process.env.MYSQL_PASSWORD || '',
+    database: process.env.MYSQL_DATABASE || '',
+    port: process.env.MYSQL_PORT || '',
   },
   redis: {
     url:
@@ -37,13 +37,13 @@ export default {
   },
   logger: {
     db: {
-      host: process.env.LOGGER_DB_HOST || '',
-      port: process.env.LOGGER_DB_PORT || '',
-      user: process.env.LOGGER_DB_INITDB_USER_NAME || '',
-      password: process.env.LOGGER_DB_INITDB_USER_PASSWORD || '',
-      database: process.env.LOGGER_DB_INITDB_DATABASE || '',
-      auth_source: process.env.LOGGER_DB_INITDB_ROOT_USERNAME || '',
-      collection: process.env.LOGGER_DB_COLLECTION || '',
+      host: process.env.MONGO_HOST || '',
+      port: process.env.MONGO_PORT || '',
+      user: process.env.MONGO_USER_NAME || '',
+      password: process.env.MONGO_USER_PASSWORD || '',
+      database: process.env.MONGO_INITDB_DATABASE || '',
+      auth_source: process.env.MONGO_INITDB_ROOT_USERNAME || '',
+      collection: process.env.MONGO_COLLECTION || '',
     },
     file: {
       root_dir: 'logs',

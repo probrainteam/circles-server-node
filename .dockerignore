@@ -1,0 +1,6 @@
+node_module
+logs
+.vscode
+.eslintignore
+.prettierrc
+README.md
