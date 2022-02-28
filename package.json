@@ -36,6 +36,7 @@
     "dev:darwin:linux": "export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
     "dev:win32": "SET NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
     "docker": "docker-compose -f 'docker-compose.yml' up -d --build node-dev",
+    "nginx": "docker-compose -f 'docker-compose.yml' up -d --build nginx-dev",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
