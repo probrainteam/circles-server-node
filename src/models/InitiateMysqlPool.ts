@@ -1,6 +1,8 @@
 import config from '../conf';
 import { logger } from '../utils/logger';
 import mysql from 'promise-mysql2';
+const fs = require('fs');
+const path = require('path');
 
 let pool: mysql.Pool;
 
@@ -10,16 +12,33 @@ async function initialize(): Promise<any> {
     user: config.db.id,
     password: config.db.password,
     database: config.db.database,
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
+    waitForConnections: true, // 풀에 여유 커넥션이 없는 경우 대기
+    connectionLimit: 10, // 최대 10개
+    queueLimit: 0, // pool에 대기 요청 최대 개수, 0 -> 제한 없음
+    multipleStatements: true, // 보안 유의
   });
-  pool.on('error', function (err: any) {
-    logger.error(`MYSQL pool Failed to Intialized ❌`);
-    logger.error(err);
-  });
-  pool.getConnection().then((con) => logger.info(con));
-  logger.info(`MYSQL pool Intialized ✅`);
+
+  try {
+    // Table 생성 Query 날림
+    const connection = await pool.getConnection();
+    const [rows, fields] = await connection.query('SHOW TABLES;');
+
+    // Table 유무는 현재 table row개수가 0이라면 없다고 판정.
+    // @TODO :: 해당 로직을 구체적으로 변경
+    if (Object.keys(rows).length === 0) {
+      logger.warn('> There is no tables');
+      logger.warn('> Create tables... ');
+      // Table 생성 query문을 '../conf/tableConfig.sql'로 부터 읽어와 execute
+      const tableCreateQuery: string = fs.readFileSync(path.join(__dirname, '../conf/tableConfig.sql')).toString();
+      await connection.query(tableCreateQuery);
+      logger.warn('> Success !');
+    }
+    logger.info('MYSQL Intialized ✅');
+  } catch (error: any) {
+    // Error -> Table 생성 쿼리 중 오류 발생
+    logger.error('MYSQL Failed to Intialized ❌');
+    logger.error(error);
+  }
   return pool;
 }
 
