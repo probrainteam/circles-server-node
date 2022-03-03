@@ -8,12 +8,12 @@ async function initialize(): Promise<any> {
   pool = mysql.createPool({
     host: config.db.host,
     user: config.db.id,
+    password: config.db.password,
     database: config.db.database,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
   });
-  logger.info((await pool.getConnection()).statistics());
   pool.on('error', function (err: any) {
     logger.error(`MYSQL pool Failed to Intialized ❌`);
     logger.error(err);
@@ -32,14 +32,13 @@ async function getConnection(): Promise<any> {
 }
 
 const connect =
-  (fn: (...args: any) => Promise<any>) =>
+  (fn: any) =>
   async (...args: any) => {
     /* DB 커넥션을 한다. */
     const con: any = await pool.getConnection();
     /* 로직에 con과 args(넘겨받은 paramter)를 넘겨준다. */
     const result = await fn(con, ...args).catch((error: any) => {
       /* 에러시 con을 닫아준다. */
-      logger.error(error);
       con.connection.release();
       throw error;
     });
@@ -47,15 +46,16 @@ const connect =
     con.connection.release();
     return result;
   };
+
 const transaction =
-  (fn: (...args: any) => Promise<any>) =>
+  (fn: any) =>
   async (...args: any) => {
     /* DB 커넥션을 한다. */
     const con: any = await pool.getConnection();
     /* 트렌젝션 시작 */
     await con.connection.beginTransaction();
     /* 비지니스 로직에 con을 넘겨준다. */
-    const result = await fn(con, ...args).catch(async (error) => {
+    const result = await fn(con, ...args).catch(async (error: any) => {
       /* rollback을 진행한다. */
       await con.rollback();
       /* 에러시 con을 닫아준다. */
@@ -68,4 +68,5 @@ const transaction =
     con.connection.release();
     return result;
   };
+
 module.exports = { getPool, getConnection, connect, transaction };
