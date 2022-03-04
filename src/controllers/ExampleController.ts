@@ -12,9 +12,7 @@ const exampleControll = async (req: Request, res: Response) => {
   res.status(200).send(JSON.stringify(test));
 };
 const exampleTransaction = async (req: Request, res: Response) => {
-  await pool.transaction((con: any) =>
-    con.query(`insert into manager values("myEmail","myPW",0,"myPubkey",0)`),
-  )();
+  await pool.transaction((con: any) => con.query(`insert into manager values("myEmail","myPW",0,"myPubkey",0)`))();
   res.status(200).send();
 };
 export default { exampleControll, exampleTransaction };
