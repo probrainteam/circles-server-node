@@ -1,44 +1,47 @@
 const express = require('express');
 const app = express();
-const mysql = require("../../src/models/InitiateMysqlEnvironment");
-import request from "supertest"
-import loaders from "../../src/loaders"
-import {destroyMongo} from "../../src/utils/logger"
+const mysql = require('../../src/models/InitiateMysqlPool.ts');
+import request from 'supertest';
+import loaders from '../../src/loaders';
+import { destroyMongo } from '../../src/utils/logger';
 
-let client:any;
-jest.setTimeout(10000)
+let client: any;
+jest.setTimeout(10000);
 
-function sleep(ms:number) {
-    return new Promise((r) => setTimeout(r, ms));
+function sleep(ms: number) {
+  return new Promise((r) => setTimeout(r, ms));
 }
 
-beforeAll(async()=>{
-    await sleep(1000)
-    await loaders({ expressApp: app });
-})
-beforeEach(async ()=>{
-    await sleep(2)
-    const connection = await mysql;
-    client = await connection.connection;
-})
-describe("Routing test", ()=>{
-    test("Get example/test", async ()=>{
-
-        const response = await request(app).get("/example/test")
-        expect(response.statusCode).toBe(200)
-    })
-
-    test("Get test/example", async ()=>{
-     
-        const response = await request(app).get("/test/example")
-        expect(response.statusCode).toBe(404)
-    })
-})
-afterAll(async () => {
-    // THIS IS HOW YOU CLOSE CONNECTION IN MONGOOSE (mongodb ORM)
-    const client = await mysql.getConnection();
-    client.destroy();
-    destroyMongo();
+beforeAll(async () => {
+  await sleep(1000);
+  await loaders({ expressApp: app });
 });
-    
-    
+beforeEach(async () => {
+  await sleep(2);
+  const connection = await mysql;
+  client = await connection.connection;
+});
+describe('Routing test', () => {
+  test('Get example/test', async () => {
+    const response = await request(app).get('/example/test');
+    expect(response.statusCode).toBe(200);
+  });
+
+  test('Get test/example', async () => {
+    const response = await request(app).get('/test/example');
+    expect(response.statusCode).toBe(404);
+  });
+});
+describe('Mysql test', () => {
+  test('Get table length', async () => {
+    const result = await mysql.connect((con: any) => con.query(`show tables`))();
+    expect(result.length).toBe(9);
+  });
+});
+afterAll(async () => {
+  // THIS IS HOW YOU CLOSE CONNECTION IN MONGOOSE (mongodb ORM)
+//   const client = await mysql.getConnection();
+//   client.destroy();
+    // No more need to destroy mysql connection.
+  destroyMongo();
+});
