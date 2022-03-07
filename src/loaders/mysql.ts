@@ -1,5 +1,4 @@
-const mysql = require('../models/InitiateMysqlEnvironment');
+const pool = require('../models/InitiateMysqlPool');
 export default async (): Promise<any> => {
-  const client = await mysql.getConnection();
-  //client.destroy();
+  return await pool.getPool();
 };
