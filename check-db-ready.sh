@@ -34,10 +34,10 @@ if [ -f ".env" ]; then
     export $(cat .env | sed 's/#.*//g' | xargs) # env file load
     echo "Using development .env"
 else
-    echo "There is no .env.local !!"
+    echo "There is no .env..."
+    echo "\033[31m >> ...Abort\033[0m";
     exit -1
 fi
-export $(cat .env | sed 's/#.*//g' | xargs) # env file load
 
 # Docker ping tests
 # check_status "localhost:${MYSQL_PORT}"
@@ -53,7 +53,6 @@ until echo '\q' | docker exec dev_db mysql -h "${MYSQL_HOST}" -P"${MYSQL_PORT}" 
         >&2 echo "\033[33mMySQL is unavailable - sleeping 5sec\033[0m";
     sleep 5
     fi
-    
     CURRENT_TRY=$((CURRENT_TRY+1))
 done
 echo "\033[32mMYSQL is ready\033[0m";
@@ -71,7 +70,6 @@ until echo '\q' | docker exec logger-db mongo --host ${MONGO_HOST} ${MONGO_INITD
         >&2 echo "\033[33mMONGO is unavailable - sleeping 5sec\033[0m";
     sleep 5
     fi
-    
     CURRENT_TRY=$((CURRENT_TRY+1))
 done
 echo "\033[32mMONGO is ready\033[0m";
