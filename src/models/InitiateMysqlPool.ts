@@ -12,10 +12,10 @@ async function initialize(): Promise<any> {
     user: config.db.id,
     password: config.db.password,
     database: config.db.database,
-    waitForConnections: true, // 풀에 여유 커넥션이 없는 경우 대기
-    connectionLimit: 10, // 최대 10개
-    queueLimit: 0, // pool에 대기 요청 최대 개수, 0 -> 제한 없음
-    multipleStatements: true, // 보안 유의
+    waitForConnections: config.db.wait_for_connection, // 풀에 여유 커넥션이 없는 경우 대기
+    connectionLimit: config.db.connection_limit, // 최대 10개
+    queueLimit: config.db.queue_limit, // pool에 대기 요청 최대 개수, 0 -> 제한 없음
+    multipleStatements: config.db.multiple_stmt, // 보안 유의
   });
 
   try {
