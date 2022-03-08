@@ -4,7 +4,7 @@ services:
     container_name: node-dev
     build:
       context: ./
-      target: dev # 도커파일 내 base dev를 build
+      target: development # 도커파일 내 base dev를 build
     volumes:
       - .:/src
     command: yarn dev
