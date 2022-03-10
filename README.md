@@ -1,4 +1,4 @@
-# circles-server-node
+# circles-server-node [![Push in feature branches](https://github.com/probrainteam/circles-server-node/actions/workflows/push.yml/badge.svg?branch=main)](https://github.com/probrainteam/circles-server-node/actions/workflows/push.yml)
 
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=TypeScript&logoColor=white"/> <img src="https://img.shields.io/badge/Yarn-2C8EBB?style=flat-square&logo=Yarn&logoColor=white"/> <img src="https://img.shields.io/badge/NGINX-009639?style=flat-square&logo=NGINX&logoColor=white"/> <img src="https://img.shields.io/badge/aws-232F3E?style=flat-square&logo=Amazonaws&logoColor=white"/>
 
