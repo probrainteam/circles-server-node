@@ -42,6 +42,7 @@ async function initialize(): Promise<any> {
       throw error;
     }
   }
+  return pool;
 }
 
 const transaction =
