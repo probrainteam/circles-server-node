@@ -4,7 +4,7 @@ import { logger } from '../utils/logger';
 const pool = require('../models/InitiateMysqlPool');
 
 const exampleControll = async (req: Request, res: Response) => {
-  const test = await pool.connect(async (con: any) => {
+  const test = await pool.transaction(async (con: any) => {
     const result = await con.query(`show tables`, []);
     // ...비지니스로직...
     return result;

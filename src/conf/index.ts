@@ -24,6 +24,10 @@ export default {
     password: process.env.MYSQL_PASSWORD || '',
     database: process.env.MYSQL_DATABASE || '',
     port: process.env.MYSQL_PORT || '',
+    waitForConnection: process.env.MYSQL_POOL_WAITFORCONNECTION || '',
+    connectionLimit: process.env.MYSQL_POOL_CONNECTIONLIMIT || '',
+    queueLimit: process.env.MYSQL_POOL_QUEUELIMIT || '',
+    multipleStmt: process.env.MYSQL_MULTIPLE_STATEMENT || '',
   },
   redis: {
     url:
