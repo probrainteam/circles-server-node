@@ -27,12 +27,12 @@ async function initialize(): Promise<any> {
       // Table 유무는 현재 table row개수가 0이라면 없다고 판정.
       // @TODO :: 해당 로직을 구체적으로 변경
       if (Object.keys(rows).length === 0) {
-        logger.warn('> There is no tables');
-        logger.warn('> Create tables... ');
+        logger.verbose('> There is no tables');
+        logger.verbose('> Create tables... ');
         // Table 생성 query문을 '../conf/tableConfig.sql'로 부터 읽어와 execute
         const tableCreateQuery: string = fs.readFileSync(path.join(__dirname, '../conf/tableConfig.sql')).toString();
         await connection.query(tableCreateQuery);
-        logger.warn('> Success !');
+        logger.info('> Success !');
       }
       logger.info('MYSQL Intialized ✅');
     } catch (error: any) {
@@ -42,6 +42,7 @@ async function initialize(): Promise<any> {
       throw error;
     }
   }
+  return pool;
 }
 
 const transaction =
