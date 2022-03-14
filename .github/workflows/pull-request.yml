@@ -1,8 +1,5 @@
 name: "Dev test with Docker and Jest"
 on:
-  push:
-    branches:
-      - "**"
   pull_request:
     branches:
       - "**"
