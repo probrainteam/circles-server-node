@@ -7,64 +7,43 @@ const path = require('path');
 let pool: mysql.Pool;
 
 async function initialize(): Promise<any> {
-  pool = mysql.createPool({
-    host: config.db.host,
-    user: config.db.id,
-    password: config.db.password,
-    database: config.db.database,
-    waitForConnections: true, // 풀에 여유 커넥션이 없는 경우 대기
-    connectionLimit: 10, // 최대 10개
-    queueLimit: 0, // pool에 대기 요청 최대 개수, 0 -> 제한 없음
-    multipleStatements: true, // 보안 유의
-  });
+  if (!pool) {
+    pool = mysql.createPool({
+      host: config.db.host,
+      user: config.db.id,
+      password: config.db.password,
+      database: config.db.database,
+      waitForConnections: config.db.waitForConnection, // 풀에 여유 커넥션이 없는 경우 대기
+      connectionLimit: config.db.connectionLimit, // 최대 10개
+      queueLimit: config.db.queueLimit, // pool에 대기 요청 최대 개수, 0 -> 제한 없음
+      multipleStatements: config.db.multipleStmt, // 보안 유의
+    });
 
-  try {
-    // Table 생성 Query 날림
-    const connection = await pool.getConnection();
-    const [rows, fields] = await connection.query('SHOW TABLES;');
+    try {
+      // Table 생성 Query 날림
+      const connection = await pool.getConnection();
+      const [rows, _] = await connection.query('SHOW TABLES;');
 
-    // Table 유무는 현재 table row개수가 0이라면 없다고 판정.
-    // @TODO :: 해당 로직을 구체적으로 변경
-    if (Object.keys(rows).length === 0) {
-      logger.warn('> There is no tables');
-      logger.warn('> Create tables... ');
-      // Table 생성 query문을 '../conf/tableConfig.sql'로 부터 읽어와 execute
-      const tableCreateQuery: string = fs.readFileSync(path.join(__dirname, '../conf/tableConfig.sql')).toString();
-      await connection.query(tableCreateQuery);
-      logger.warn('> Success !');
+      // Table 유무는 현재 table row개수가 0이라면 없다고 판정.
+      // @TODO :: 해당 로직을 구체적으로 변경
+      if (Object.keys(rows).length === 0) {
+        logger.verbose('> There is no tables');
+        logger.verbose('> Create tables... ');
+        // Table 생성 query문을 '../conf/tableConfig.sql'로 부터 읽어와 execute
+        const tableCreateQuery: string = fs.readFileSync(path.join(__dirname, '../conf/tableConfig.sql')).toString();
+        await connection.query(tableCreateQuery);
+        logger.info('> Success !');
+      }
+      logger.info('MYSQL Intialized ✅');
+    } catch (error: any) {
+      // Error -> Table 생성 쿼리 중 오류 발생
+      logger.error('MYSQL Failed to Intialized ❌');
+      logger.error(error);
+      throw error;
     }
-    logger.info('MYSQL Intialized ✅');
-  } catch (error: any) {
-    // Error -> Table 생성 쿼리 중 오류 발생
-    logger.error('MYSQL Failed to Intialized ❌');
-    logger.error(error);
   }
   return pool;
 }
-
-async function getPool(): Promise<any> {
-  if (pool) return pool;
-  else return await initialize();
-}
-async function getConnection(): Promise<any> {
-  return pool.getConnection();
-}
-
-const connect =
-  (fn: any) =>
-  async (...args: any) => {
-    /* DB 커넥션을 한다. */
-    const con: any = await pool.getConnection();
-    /* 로직에 con과 args(넘겨받은 paramter)를 넘겨준다. */
-    const result = await fn(con, ...args).catch((error: any) => {
-      /* 에러시 con을 닫아준다. */
-      con.connection.release();
-      throw error;
-    });
-    /* con을 닫아준다. */
-    con.connection.release();
-    return result;
-  };
 
 const transaction =
   (fn: any) =>
@@ -88,4 +67,4 @@ const transaction =
     return result;
   };
 
-module.exports = { getPool, getConnection, connect, transaction };
+module.exports = { initialize, transaction };

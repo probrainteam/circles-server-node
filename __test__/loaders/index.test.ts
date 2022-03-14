@@ -14,6 +14,7 @@ function sleep(ms: number) {
 
 beforeAll(async () => {
   await sleep(1000);
+  client = await mysql.initialize();
   await loaders({ expressApp: app });
 });
 describe('Routing test', () => {
@@ -29,12 +30,13 @@ describe('Routing test', () => {
 });
 describe('Mysql test', () => {
   test('Get table length', async () => {
-    const [result, field] = await mysql.connect((con: any) => con.query(`show tables`))();
+    const [result, field] = await mysql.transaction((con: any) => con.query(`show tables`))();
     expect(result.length).toBe(9);
   });
 });
 afterAll(async () => {
   // THIS IS HOW YOU CLOSE CONNECTION IN MONGOOSE (mongodb ORM)
   // No more need to destroy mysql connection.
+  client.end();
   destroyMongo();
 });
