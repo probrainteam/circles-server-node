@@ -6,7 +6,7 @@ COPY yarn*.lock /
 
 FROM base as development
 ENV TZ=Asia/Seoul
-# RUN npm install typescript -g
-# RUN npm install -g ts-node
-RUN yarn install
+RUN npm install typescript -g
+RUN npm install -g ts-node
+RUN npm install -g nodemon && yarn install
 COPY . /
