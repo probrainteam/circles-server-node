@@ -29,11 +29,13 @@
   "scripts": {
     "start": "node dist/app.js",
     "build": "tsc",
-    "test": "run-script-os",
-    "test:darwin:linux": "export NODE_ENV=development && tsc --noEmit && jest --detectOpenHandles --runInBand",
-    "test:win32": "echo 'Nothing available ... abort' exit -1",
-    "node:dev": "export NODE_ENV=development && nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
-    "dev": "docker-compose -f 'docker-compose.yml' up -d --build nginx-dev",
+    "test": "tsc --noEmit && jest --detectOpenHandles --runInBand",
+    "node:dev": "nodemon --watch \"src/**/*.ts\" --exec \"ts-node\" src/app.ts dev",
+    "docker-db": "docker-compose -f 'docker-compose.yml' up -d --build dev_db redis logger-db",
+    "docker-node": "docker-compose -f 'docker-compose.yml' up -d --build node-dev",
+    "wait-db":"./check-db-ready.sh",
+    "docker-nginx":"docker-compose -f 'docker-compose.yml' up -d --build nginx-dev",
+    "dev": "yarn docker-db && yarn wait-db && yarn docker-node && yarn docker-nginx",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
