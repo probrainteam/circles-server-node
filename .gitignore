@@ -20,6 +20,7 @@ typings/
 
 # Optional 
 .DS_Store
+coverage/
 
 # Docker
 .docker/data
