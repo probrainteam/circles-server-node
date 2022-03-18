@@ -1,8 +1,12 @@
 name: "Dev test with Docker and Jest"
 on:
+  push:
+    branches:
+      - "develop"
   pull_request:
     branches:
-      - "**"
+      - "*/*"
+      - "develop"
       # - '*'         # matches every branch that doesn't contain a '/'
       # - '*/*'       # matches every branch containing a single '/'
       # - '**'        # matches every branch
@@ -40,7 +44,7 @@ jobs:
           test-script: docker exec node-dev yarn test
           package-manager: yarn
 
-      - name: action-slack
+      - name: Push to slack
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
