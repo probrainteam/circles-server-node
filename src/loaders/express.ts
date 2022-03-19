@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import generalErrorHandler from '../errors/generalErrorHandler';
-import routes from '../routes';
-import MorganMiddleware from '../middleware/MorganMiddleware';
+import routes from '../api/routes';
+import MorganMiddleware from '../api/middleware/MorganMiddleware';
 
 export default async ({ app }: { app: express.Application }) => {
   app.get('/status', (req, res) => {
