@@ -1,7 +1,4 @@
-import { InitiateRedisEnviroment } from '../cache/InitiateRedisEnvironment';
-
-export default async (): Promise<boolean> => {
-  const initiateor = new InitiateRedisEnviroment();
-
-  return await initiateor.initialize();
+const client = require('../cache/InitiateRedisPool')
+export default async (): Promise<any> => {
+  await client.initialize();
 };
