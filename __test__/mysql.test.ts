@@ -1,6 +1,5 @@
 const mysql = require('../src/models/InitiateMysqlPool.ts');
-import mongoose from 'mongoose';
-import { logger, destroyMongo } from '../src/utils/logger';
+import { destroyMongo } from '../src/utils/logger';
 
 let client: any;
 jest.setTimeout(10000);
@@ -28,5 +27,4 @@ describe('Mysql test', () => {
 afterAll(async () => {
   client.end();
   destroyMongo();
-  mongoose.connection.close();
 });
