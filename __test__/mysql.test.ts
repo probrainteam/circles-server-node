@@ -20,7 +20,7 @@ describe('Mysql test', () => {
 
   test('Get table length', async () => {
     const [result, _] = await mysql.transaction((con: any) => con.query(`show tables`))();
-    expect(result.length).toBe(9);
+    expect(result.length).toBe(8);
   });
 });
 
