@@ -19,5 +19,4 @@ async function initialize(): Promise<any> {
   }
   return client;
 }
-
 module.exports = { initialize };
