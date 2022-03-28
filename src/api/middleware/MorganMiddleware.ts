@@ -1,6 +1,6 @@
 import morgan, { StreamOptions } from 'morgan';
 
-import { logger } from '../utils/logger';
+import { logger } from '../../utils/logger';
 
 // console.log => winston dump
 const stream: StreamOptions = {

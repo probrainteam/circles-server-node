@@ -1,37 +1,55 @@
-# name: "Dev test with Docker and Jest"
-# on:
-#   pull_request:
-#     branches:
-#       - "**"
-#       # - '*'         # matches every branch that doesn't contain a '/'
-#       # - '*/*'       # matches every branch containing a single '/'
-#       # - '**'        # matches every branch
-#       # - '!master'   # excludes master
+name: "Dev test with Docker and Jest"
+on:
+  push:
+    branches:
+      - "develop"
+  pull_request:
+    branches:
+      - "*/*"
+      - "develop"
+      # - '*'         # matches every branch that doesn't contain a '/'
+      # - '*/*'       # matches every branch containing a single '/'
+      # - '**'        # matches every branch
+      # - '!master'   # excludes master
 
-# jobs:
-#   build_docker_and_run_test:
-#     timeout-minutes: 8
-#     runs-on: ubuntu-latest
-#     # env:
-#     #   MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-#     #   DEV_MYSQL_PORT: ${{ secrets.DEV_MYSQL_PORT }}
-#     #   DEV_REDIS_PORT: ${{ secrets.DEV_REDIS_PORT }}
+jobs:
+  build_docker_and_run_test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
     
-#     steps:
-#       # 해당 저장소의 코드를 가져옵니다.
-#       - name: Checkout
-#         uses: actions/checkout@v2
+    steps:
+      # 해당 저장소의 코드를 가져옵니다.
+      - name: Checkout
+        uses: actions/checkout@v2
 
-#       # yarn 디펜던시 설치
-#       - name: Install dependencies
-#         run: yarn install
+      # yarn 디펜던시 설치
+      - name: Build and run databases
+        run: "docker-compose -f 'docker-compose.yml' up -d --build dev_db redis logger-db"
 
-#       - name: Initialize docker and wait until ready
-#         run: ./init-dev.sh
-     
-#       # Coverage를 작성해주는 pull request
-#       - name: Docker build and Tests ✅
-#         uses: ArtiomTr/jest-coverage-report-action@v2
-#         with:
-#           test-script: yarn test
-#           package-manager: yarn
+      - name: Wait for initialize database
+        run: ./check-db-ready.sh
+
+      - name: Build and run node
+        run: "docker-compose -f 'docker-compose.yml' up -d --build node-dev"
+
+      - name: Build and run NGINX
+        run: "docker-compose -f 'docker-compose.yml' up -d --build nginx-dev"
+
+      - name: check docker
+        run: docker ps
+
+      - name: Test inside docker ✅
+        uses: ArtiomTr/jest-coverage-report-action@v2
+        with:
+          test-script: docker exec node-dev yarn test
+          package-manager: yarn
+
+      - name: Push to slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: Github Action Test # default: 8398a7@action-slack
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URI }} # required
+        if: always() # Pick up events even if the job fails or is canceled.

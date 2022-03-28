@@ -9,8 +9,7 @@ services:
     volumes:
       - .docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - .docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - node-dev
+
   nginx:
       image: nginx:latest
       container_name: nginx
@@ -22,24 +21,22 @@ services:
       env_file: .env
   node-dev:
     container_name: node-dev
+    restart: always
     build:
       context: ./
-      target: dev # 도커파일 내 base dev를 build
+      target: development # 도커파일 내 base dev를 build
     volumes:
       - .:/src
     command: yarn node:dev
     environment:
       DEBUG: nodejs-docker-express:*
     env_file: .env
-    depends_on:
-      - dev_db
-      - redis
-      - logger-db
+
   node:
     container_name: node
     build:
       context: ./
-      target: dev # 도커파일 내 base dev를 build
+      target: production # 도커파일 내 base dev를 build
     volumes:
       - .:/src
     command: yarn start

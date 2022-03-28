@@ -1,4 +1,5 @@
 # !bin/bash
+# Check if database ready
 MAX_TRY=8
 CURRENT_TRY=0
 
@@ -29,28 +30,22 @@ function check_status {
     fi
 }
 
-if [ -f ".env.local" ]; then
-    \cp .env.local .env
+if [ -f ".env" ]; then
     export $(cat .env | sed 's/#.*//g' | xargs) # env file load
     echo "Using development .env"
 else
     echo "There is no .env.local !!"
     exit -1
 fi
+export $(cat .env | sed 's/#.*//g' | xargs) # env file load
 
-# docker 실행
-bash -c "docker-compose -f 'docker-compose.yml' up -d --build dev_db redis logger-db"
-docker-compose ps
-
-
-# Docker ping test
-check_status "localhost:${DB_PORT}"
-check_status "localhost:${REDIS_PORT}"
-check_status "localhost:${LOGGER_DB_PORT}"
+# Docker ping tests
+# check_status "localhost:${MYSQL_PORT}"
+# check_status "localhost:${REDIS_PORT}"
+# check_status "localhost:${MONGO_PORT}"
 
 # Mysql ping test
-# @TODO :: mysql: [Warning] Using a password on the command line interface can be insecure. 출력 안되게 변경
-until echo '\q' | docker exec dev_db mysql -h "${DB_HOST}" -P"${DB_PORT}" -u"${DB_USER}" -p"${DB_PASSWORD}" ${DB_DATABASE}; do
+until echo '\q' | docker exec dev_db mysql -h "${MYSQL_HOST}" -P"${MYSQL_PORT}" -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" ${MYSQL_DATABASE}> /dev/null 2>&1; do
     if [ $CURRENT_TRY -eq $MAX_TRY ]; then
         echo "\033[31mMYSQL is unavailable - Abort\033[0m";
         exit -1;
@@ -66,7 +61,7 @@ echo "\033[32mMYSQL is ready\033[0m";
 CURRENT_TRY=0
 
 # mongo ping test
-until echo '\q' | docker exec logger-db mongo --host ${LOGGER_DB_HOST} ${LOGGER_DB_INITDB_DATABASE} -u${LOGGER_DB_INITDB_USER_NAME} -p${LOGGER_DB_INITDB_USER_PASSWORD} --authenticationDatabase ${LOGGER_DB_INITDB_ROOT_USERNAME}> /dev/null 2>&1; do
+until echo '\q' | docker exec logger-db mongo --host ${MONGO_HOST} ${MONGO_INITDB_DATABASE} -u${MONGO_USER_NAME} -p${MONGO_USER_PASSWORD} --authenticationDatabase ${MONGO_INITDB_ROOT_USERNAME}> /dev/null 2>&1; do
     if [ $CURRENT_TRY -eq $MAX_TRY ]; then
         echo "\033[31mMONGO is unavailable - Abort\033[0m";
         docker ps
