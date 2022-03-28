@@ -5,7 +5,6 @@ import request from 'supertest';
 import loaders from '../../src/loaders';
 import { destroyMongo } from '../../src/utils/logger';
 
-let client: any;
 jest.setTimeout(10000);
 
 function sleep(ms: number) {
@@ -14,7 +13,6 @@ function sleep(ms: number) {
 
 beforeAll(async () => {
   await sleep(1000);
-  client = await mysql.initialize();
   await loaders({ expressApp: app });
 });
 describe('Routing test', () => {
@@ -28,15 +26,9 @@ describe('Routing test', () => {
     expect(response.statusCode).toBe(404);
   });
 });
-describe('Mysql test', () => {
-  test('Get table length', async () => {
-    const [result, field] = await mysql.transaction((con: any) => con.query(`show tables`))();
-    expect(result.length).toBe(9);
-  });
-});
 afterAll(async () => {
   // THIS IS HOW YOU CLOSE CONNECTION IN MONGOOSE (mongodb ORM)
   // No more need to destroy mysql connection.
-  client.end();
+  (await mysql.initialize()).end();
   destroyMongo();
 });
